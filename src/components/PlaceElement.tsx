@@ -13,9 +13,9 @@ const PlaceElement = (props: PlaceElementProps) => {
     return (
         <div
             className={props.isSelected ?
-                'outlined element container vertical open'
+                'leftLine element container vertical open'
                 :
-                'outlined element container vertical'
+                'leftLine element container vertical'
             }
             onClick={() => props.setSelected(props.isSelected ? undefined : props.data.id)}
         >

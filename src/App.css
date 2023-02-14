@@ -52,13 +52,20 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+#mapContainer {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
 .header {
   height: var(--size4);
   width: var(--size4);
   margin: var(--spacing2);
   position: fixed;
+  right: 0px;
   border-radius: 50%;
-  background-color: var(--colorBlack);
+  background-color: var(--colorWhite);
 }
 .body {
   height: 100%;
@@ -69,6 +76,9 @@
 }
 .outlined.selected {
   border-color: var(--colorRed);
+}
+.leftLine {
+  border-left: solid var(--borderWidth2) var(--colorBlack);
 }
 
 .container {
@@ -101,6 +111,7 @@
   margin-bottom: var(--spacing2);
   flex-grow: 0;
   flex-shrink: 0;
+  background-color: var(--colorWhite);
 }
 .list .element:last-child {
   margin-bottom: var(--spacing5);
