@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { PlaceProps } from './PlacesList';
 
 interface PlaceElementProps {
-    data: {
-        id: number
-        name: string
-    }
+    data: PlaceProps
     isSelected?: boolean
     setSelected(param?: number): void
 }
 
-const PlaceElement = (props: PlaceElementProps) => {
+const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
     return (
         <div
             className={props.isSelected ?
@@ -19,11 +17,11 @@ const PlaceElement = (props: PlaceElementProps) => {
             }
             onClick={() => props.setSelected(props.isSelected ? undefined : props.data.id)}
         >
-            <div className='preview horizontal'>
+            <div className='preview horizontal fullWidth'>
                 <div className='title'>{props.data.name}</div>
             </div>
         </div>
     )
 }
 
-export default PlaceElement;
+export default PlaceElement

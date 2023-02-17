@@ -1,27 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Header from './components/Header';
 import PlacesList from './components/PlacesList';
 
-const App = () => {
-  var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+const App: React.FunctionComponent = () => {
+  const [displayBody, setDisplayBody] = useState<boolean>(true)
+  const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
 
-  mapboxgl.accessToken = 'pk.eyJ1IjoieGF2aWVyamVhbiIsImEiOiJjbGUzYXl1dXAwM2g5M25tcHBhcnowc3pmIn0.5AXUHhsjd3pfaGVQObJ72w';
-  var map = new mapboxgl.Map({
-    container: 'mapContainer',
-    style: 'mapbox://styles/xavierjean/cle3b5naa008501pdz0ckgjk3'
-  });
+  const toggleBody = () => {
+    setDisplayBody(!displayBody)
+    setDisplayPlacesList(!displayPlacesList)
+  }
+
+  const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+
+  let map
+  mapboxgl.accessToken = 'pk.eyJ1IjoieGF2aWVyamVhbiIsImEiOiJjbGUzYXl1dXAwM2g5M25tcHBhcnowc3pmIn0.5AXUHhsjd3pfaGVQObJ72w' as string;
+
+  useEffect(() => {
+    map = new mapboxgl.Map({
+      container: 'mapContainer',
+      style: 'mapbox://styles/xavierjean/cle3b5naa008501pdz0ckgjk3'
+    });
+  }, [])
 
   return (
-    <div className="app">
+    <div id="app">
       <div id='mapContainer'></div>
-      <div className='header outlined'>
-
-      </div>
-      <div className='body'>
-        <PlacesList />
+      <Header
+        displayBody={displayBody}
+        toggleBody={toggleBody}
+      />
+      <div id='body' className={displayBody ? 'open' : ''}>
+        <PlacesList
+          displayPlacesList={displayPlacesList}
+        />
       </div>
     </div>
   );
 }
 
-export default App;
+export default App

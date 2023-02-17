@@ -1,58 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchPlacesList } from '../request';
 import PlaceElement from './PlaceElement';
 
-const PlacesList = () => {
-    const fakeCafes = [
-        {
-            id: 9876,
-            name: "Bao café",
-        },
-        {
-            id: 56,
-            name: "Paul",
-        },
-        {
-            id: 876,
-            name: "Caffetteria",
-        },
-        {
-            id: 410,
-            name: "Tully's",
-        },
-        {
-            id: 265,
-            name: "Café Pephka",
-        },
-        {
-            id: 19862,
-            name: "Biel Lorata",
-        },
-        {
-            id: 76,
-            name: "Osaka coffee",
-        },
-        {
-            id: 879,
-            name: "Lux's café du commerce",
-        },
-        {
-            id: 91823,
-            name: "Nero",
-        },
-        {
-            id: 8109,
-            name: "Fischer",
-        },
-    ]
+export interface PlaceProps {
+    id: number
+    name: string
+    latitude: number
+    longitude: number
+    distance: number
+    type: string
+    quiet: boolean
+    solo: boolean
+    gathering: boolean
+    wifi: number
+    outlet: boolean
+}
+
+interface PlacesListProps {
+    displayPlacesList: boolean
+}
+
+const PlacesList: React.FunctionComponent<PlacesListProps> = (props) => {
+    const [placesList, setPlacesList] = useState<PlaceProps[]>([])
+
+    const fetchPlacesAndSetState = async (lat?: number, lon?: number) => {
+        const result = await fetchPlacesList(lat, lon)
+        setPlacesList(result)
+    }
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
+            fetchPlacesAndSetState(position.coords.latitude, position.coords.longitude)
+        })
+    }, [])
 
     const [selected, setSelected] = useState<number | undefined>(undefined)
 
     return (
-        <div className='list container'>
+        <div id='mainList' className={props.displayPlacesList ? 'list container open' : 'list container'}>
             {
-                fakeCafes.map((el) => <PlaceElement
-                    data={el}
-                    isSelected={selected === el.id}
+                placesList.map((place) => <PlaceElement
+                    data={place}
+                    isSelected={selected === place.id}
                     setSelected={setSelected}
                 /> )
             }
@@ -60,4 +49,4 @@ const PlacesList = () => {
     )
 }
 
-export default PlacesList;
+export default PlacesList
