@@ -26,7 +26,7 @@ const App: React.FunctionComponent = () => {
 
   return (
     <div id="app">
-      <div id='mapContainer'></div>
+      <div id='mapContainer' className={displayBody ? '' : 'open'}></div>
       <Header
         displayBody={displayBody}
         toggleBody={toggleBody}

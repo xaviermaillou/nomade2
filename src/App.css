@@ -24,9 +24,9 @@
   --size9: 768px;
 
   /* Font sizes */
-  --font1: 11px;
-  --font2: 14px;
-  --font3: 16px;
+  --font1: 14px;
+  --font2: 16px;
+  --font3: 18px;
   --font4: 22px;
 
   /* Border width */
@@ -41,7 +41,8 @@
   transition: all 0.2s ease-out;
   padding: 0;
   margin: 0;
-  font-family: monospace;
+  font-family: 'Roboto';
+  font-size: var(--font2);
 }
 
 ::-webkit-scrollbar {
@@ -66,6 +67,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 .fullWidth {
   width: 100%;
@@ -102,6 +104,19 @@
   /* The height is calculated based on closed element height */
   height: calc(var(--size5) - (2 * var(--spacing2)));
 }
+.previewInfo {
+  justify-content: center;
+  align-items: flex-start;
+}
+.previewData {
+  width: 30%;
+  overflow-x: hidden;
+  align-items: flex-end;
+}
+.previewData div {
+  height: 50%;
+  font-size: var(--font1);
+}
 
 .list .element.open {
   height: var(--size8);
@@ -110,7 +125,16 @@
 .title {
   font-weight: 900;
   font-size: var(--font4);
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
+.subtitle {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
 
 
 #app {
@@ -123,6 +147,10 @@
   height: 100%;
   width: 100%;
   position: fixed;
+  opacity: 0.2;
+}
+#mapContainer.open {
+  opacity: 1;
 }
 
 #header {
@@ -153,9 +181,9 @@
 #body {
   height: 100%;
   width: 100%;
-  background-color: var(--colorWhiteTransparent);
   position: absolute;
   left: -100%;
+  z-index: 900;
 }
 #body.open {
   left: 0%;
