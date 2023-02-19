@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import PlacesList from './components/PlacesList';
+import { generateMap } from './lib/generateMap';
+import { fetchPlacesList } from './request';
 
 export interface Position {
   latitude: number,
@@ -9,44 +11,55 @@ export interface Position {
   fetched: boolean
 }
 
+export interface PlaceProps {
+  id: number
+  name: string
+  latitude: number
+  longitude: number
+  distance?: number
+  type: string
+  quiet: boolean
+  solo: boolean
+  gathering: boolean
+  wifi: number
+  outlet: boolean
+}
+
 const App: React.FunctionComponent = () => {
   const [displayBody, setDisplayBody] = useState<boolean>(true)
   const [displayMap, setDisplayMap] = useState<boolean>(false)
   const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
+
   const [userPosition, setUserPosition] = useState<Position>({
     latitude: 0,
     longitude: 0,
     fetched: false
   })
 
+  const [placesList, setPlacesList] = useState<PlaceProps[]>([])
+  const [selected, setSelected] = useState<number | undefined>(undefined)
+
   const toggleBody = () => {
     setDisplayBody(!displayBody)
     setDisplayPlacesList(!displayPlacesList)
   }
+  const forceOpenBody = () => {
+    setDisplayBody(true)
+    setDisplayPlacesList(true)
+  }
 
-  const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-
-  let map
-  mapboxgl.accessToken = 
-    `pk.eyJ1IjoieGF2aWVyamVhbiIsImEiOiJjbGUzYXl1dXAwM2g5M25tcHBhcnowc3pmIn0
-    .5AXUHhsjd3pfaGVQObJ72w` as string;
+  const fetchPlacesAndSetState = async () => {
+    const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude)
+    setPlacesList(result)
+  }
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-      setUserPosition({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        fetched: true
-      })
-      map = new mapboxgl.Map({
-        container: 'mapContainer',
-        style: 'mapbox://styles/xavierjean/cle3b5naa008501pdz0ckgjk3',
-        center: [position.coords.longitude, position.coords.latitude],
-        zoom: 13,
-      })
-      setDisplayMap(true)
-    })
-  }, [])
+    generateMap(setUserPosition, setDisplayMap, placesList, setSelected, forceOpenBody)
+  }, [placesList])
+
+  useEffect(() => {
+    fetchPlacesAndSetState()
+  }, [userPosition.fetched])
 
   return (
     <div id="app">
@@ -62,9 +75,11 @@ const App: React.FunctionComponent = () => {
       />
       <div id='body' className={displayBody ? 'open' : ''}>
         <PlacesList
+          placesList={placesList}
           displayPlacesList={displayPlacesList}
+          selected={selected}
+          setSelected={setSelected}
           userPosition={userPosition}
-          map={map}
         />
       </div>
     </div>

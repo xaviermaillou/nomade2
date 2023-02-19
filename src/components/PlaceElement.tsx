@@ -1,11 +1,11 @@
 import React from 'react';
 import { wifiScore } from '../lib/dictionary';
-import { PlaceProps } from './PlacesList';
+import { PlaceProps } from '../App';
 
 interface PlaceElementProps {
     data: PlaceProps
     isSelected?: boolean
-    setSelected(param?: number): void
+    setSelected: (arg?: number) => void
     userPositionFetched: boolean
 }
 
