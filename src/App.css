@@ -1,6 +1,6 @@
 :root {
   /* Colors */
-  --colorBlack: rgba(0,0,0,1);
+  --colorBlack: rgba(20,20,20,1);
   --colorWhite: rgba(255, 255, 255, 1);
   --colorWhiteTransparent: rgba(255, 255, 255, 0.8);
   --colorRed: rgba(255, 0, 0, 1);
@@ -41,6 +41,7 @@
   transition: all 0.2s ease-out;
   padding: 0;
   margin: 0;
+  color: var(--colorBlack);
   font-family: 'Roboto';
   font-size: var(--font2);
 }
@@ -112,6 +113,7 @@
   width: 30%;
   overflow-x: hidden;
   align-items: flex-end;
+  justify-content: flex-end;
 }
 .previewData div {
   height: 50%;

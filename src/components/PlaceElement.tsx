@@ -6,6 +6,7 @@ interface PlaceElementProps {
     data: PlaceProps
     isSelected?: boolean
     setSelected(param?: number): void
+    userPositionFetched: boolean
 }
 
 const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
@@ -26,7 +27,9 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                     <div className='subtitle'>{props.data.type}</div>
                 </div>
                 <div className="previewData vertical fullHeight">
-                    <div>{Math.round(props.data.distance).toLocaleString()} m</div>
+                    {(props.userPositionFetched && props.data.distance) &&
+                        <div>{Math.round(props.data.distance).toLocaleString()} m</div>
+                    }
                     <div className="horizontal">
                         <div>
                             <img className='fullHeight' alt='wifi' src='/img/wifi.png' />&nbsp;
