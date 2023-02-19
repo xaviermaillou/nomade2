@@ -1,6 +1,6 @@
 :root {
   /* Colors */
-  --colorBlack: rgba(20,20,20,1);
+  --colorBlack: rgba(60,60,60,1);
   --colorWhite: rgba(255, 255, 255, 1);
   --colorWhiteTransparent: rgba(255, 255, 255, 0.8);
   --colorRed: rgba(255, 0, 0, 1);
@@ -38,7 +38,7 @@
 * {
   box-sizing: border-box;
   text-decoration: none;
-  transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out, margin-bottom 0s;
   padding: 0;
   margin: 0;
   color: var(--colorBlack);
@@ -149,7 +149,11 @@
   height: 100%;
   width: 100%;
   position: fixed;
+  transition-duration: 0.4s;
   opacity: 0.2;
+}
+#mapContainer.hidden {
+  opacity: 0;
 }
 #mapContainer.open {
   opacity: 1;

@@ -45,7 +45,13 @@ const PlacesList: React.FunctionComponent<PlacesListProps> = (props) => {
     const [selected, setSelected] = useState<number | undefined>(undefined)
 
     return (
-        <div id='mainList' className={props.displayPlacesList ? 'list container open' : 'list container'}>
+        <div id='mainList' className={
+            props.displayPlacesList ?
+                'list container open'
+                :
+                'list container'
+            }
+        >
             {
                 placesList.map((place) => <PlaceElement
                     data={place}
