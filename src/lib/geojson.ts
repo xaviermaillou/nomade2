@@ -1,3 +1,5 @@
+// LEGACY FILE
+
 import { PlaceProps } from "../App"
 
 export interface GeoJsonProps {

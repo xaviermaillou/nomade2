@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header';
+import Map from './components/Map';
 import PlacesList from './components/PlacesList';
 import { generateMap } from './lib/generateMap';
 import { fetchPlacesList } from './request';
@@ -27,12 +28,12 @@ export interface PlaceProps {
 
 const App: React.FunctionComponent = () => {
   const [displayBody, setDisplayBody] = useState<boolean>(true)
-  const [displayMap, setDisplayMap] = useState<boolean>(false)
+  
   const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
 
   const [userPosition, setUserPosition] = useState<Position>({
-    latitude: 0,
-    longitude: 0,
+    latitude: 49.60833406110522,
+    longitude: 6.127097420426896,
     fetched: false
   })
 
@@ -53,9 +54,9 @@ const App: React.FunctionComponent = () => {
     setPlacesList(result)
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     generateMap(setUserPosition, setDisplayMap, placesList, setSelected, forceOpenBody)
-  }, [placesList])
+  }, [placesList]) */
 
   useEffect(() => {
     fetchPlacesAndSetState()
@@ -63,12 +64,15 @@ const App: React.FunctionComponent = () => {
 
   return (
     <div id="app">
-      <div id='mapContainer' className={
-        displayMap ?
-          (displayBody ? '' : 'open')
-          :
-          'hidden'
-      }></div>
+      <Map
+        displayBody={displayBody}
+        userPosition={userPosition}
+        setUserPosition={setUserPosition}
+        placesList={placesList}
+        selected={selected}
+        setSelected={setSelected}
+        toggleBody={toggleBody}
+      />
       <Header
         displayBody={displayBody}
         toggleBody={toggleBody}

@@ -1,3 +1,5 @@
+// LEGACY FILE
+
 import { PlaceProps, Position } from "../App";
 
 export const generateMap = (
