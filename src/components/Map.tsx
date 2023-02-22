@@ -13,7 +13,7 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
     const [viewport, setViewport] = useState({
         latitude: contextData.userPosition?.latitude,
         longitude: contextData.userPosition?.longitude,
-        zoom: 16,
+        zoom: 15,
     })
 
     useEffect(() => (
@@ -34,7 +34,7 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
 
     const handleMarkerClick = (id: number) => {
         contextData.setSelected(id)
-        contextData.toggleBody()
+        contextData.toggleDisplay()
     }
 
     return (
@@ -54,8 +54,17 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
                 initialViewState={viewport}
                 
             >
+                {contextData.userPosition.fetched && <Marker
+                        anchor="bottom"
+                        latitude={contextData.userPosition.latitude}
+                        longitude={contextData.userPosition.longitude}
+                    >
+                        <div className='userPosition'></div>
+                    </Marker>
+                }
                 {contextData.placesList?.map((place, i) => (
                     <Marker
+                        anchor="bottom"
                         latitude={place.latitude}
                         longitude={place.longitude}
                         onClick={() => handleMarkerClick(place.id)}

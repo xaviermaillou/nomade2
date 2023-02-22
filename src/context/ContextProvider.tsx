@@ -12,7 +12,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     
     const [displayBody, setDisplayBody] = useState<boolean>(true)
     const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
-    const toggleBody = () => {
+    const toggleDisplay = () => {
         setDisplayBody(!displayBody)
         setDisplayPlacesList(!displayPlacesList)
     }
@@ -35,14 +35,13 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     return (
         <context.Provider value={{
             placesList,
-            setPlacesList,
             selected,
             setSelected,
             displayBody,
             setDisplayBody,
             displayPlacesList,
             setDisplayPlacesList,
-            toggleBody,
+            toggleDisplay,
             userPosition,
             setUserPosition
         } as ContextProps}>

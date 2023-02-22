@@ -10,7 +10,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
     return (
         <div id="header" className="horizontal">
-            <div id="closeList" className="fullHeight" onClick={() => contextData.toggleBody()}>
+            <div id="closeList" className="fullHeight" onClick={() => contextData.toggleDisplay()}>
                 <img alt="search" src="/img/arrow.png" className={
                     contextData.displayBody ?
                     "fullHeight fullWidth reverse"

@@ -22,14 +22,13 @@ export interface Position {
 
 export interface ContextProps {
     placesList?: PlaceProps[],
-    setPlacesList: (arg: PlaceProps[]) => void,
     selected?: number,
     setSelected: (arg?: number) => void,
     displayBody?: boolean,
     setDisplayBody: (arg: boolean) => void,
     displayPlacesList?: boolean,
     setDisplayPlacesList: (arg: boolean) => void,
-    toggleBody: (arg: void) => void,
+    toggleDisplay: (arg: void) => void,
     userPosition: Position,
     setUserPosition: (arg: Position) => void,
 }
