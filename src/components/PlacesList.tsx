@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { PlaceProps, Position } from '../App';
+import React, { useContext, useEffect, useState } from 'react';
+import { PlaceProps, Position } from '../context/context';
 import PlaceElement from './PlaceElement';
+import context, { ContextProps } from "../context/context"
 
 interface PlacesListProps {
-    placesList: PlaceProps[]
-    displayPlacesList: boolean
-    selected?: number
-    setSelected: (arg?: number) => void
-    userPosition?: Position
+    
 }
 
 const PlacesList: React.FunctionComponent<PlacesListProps> = (props) => {
+    const contextData: ContextProps = useContext(context)
+
     return (
         <div id='mainList' className={
-            props.displayPlacesList ?
+            contextData.displayPlacesList ?
                 'list container open'
                 :
                 'list container'
             }
         >
             {
-                props.placesList.map((place) => <PlaceElement
+                contextData.placesList?.map((place) => <PlaceElement
                     data={place}
-                    isSelected={props.selected === place.id}
-                    setSelected={props.setSelected}
-                    userPositionFetched={props.userPosition?.fetched || false}
+                    isSelected={contextData.selected === place.id}
                     key={place.id}
                 /> )
             }

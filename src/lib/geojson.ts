@@ -1,6 +1,6 @@
 // LEGACY FILE
 
-import { PlaceProps } from "../App"
+import { PlaceProps } from "../context/context"
 
 export interface GeoJsonProps {
     type: "Feature",

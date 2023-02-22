@@ -1,6 +1,6 @@
 // LEGACY FILE
 
-import { PlaceProps, Position } from "../App";
+import { PlaceProps, Position } from "../context/context";
 
 export const generateMap = (
     setUserPosition: (arg: Position) => void,

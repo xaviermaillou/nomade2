@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import ReactMapGL, { Marker } from "react-map-gl"
-import { PlaceProps, Position } from "../App"
+import context, { ContextProps } from "../context/context"
 
 interface MapProps {
-    displayBody: boolean,
-    userPosition: Position,
-    setUserPosition: (arg: Position) => void,
-    placesList: PlaceProps[],
-    selected?: number,
-    setSelected: (arg?: number) => void,
-    toggleBody: (arg: void) => void,
+
 }
 
 const Map:React.FunctionComponent<MapProps> = (props) => {
+    const contextData: ContextProps = useContext(context)
+
     const [displayMap, setDisplayMap] = useState<boolean>(false)
     const [viewport, setViewport] = useState({
-        latitude: props.userPosition.latitude,
-        longitude: props.userPosition.longitude,
+        latitude: contextData.userPosition?.latitude,
+        longitude: contextData.userPosition?.longitude,
         zoom: 16,
     })
 
     useEffect(() => (
         navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-            props.setUserPosition({
+            contextData.setUserPosition({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
                 fetched: true
@@ -37,18 +33,18 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
     ), [])
 
     const handleMarkerClick = (id: number) => {
-        props.setSelected(id)
-        props.toggleBody()
+        contextData.setSelected(id)
+        contextData.toggleBody()
     }
 
     return (
         <div id='mapContainer' className={
             displayMap ?
-                (props.displayBody ? '' : 'open')
+                (contextData.displayBody ? '' : 'open')
                 :
                 'hidden'
         }>
-            {props.userPosition.fetched && <ReactMapGL
+            {contextData.userPosition.fetched && <ReactMapGL
                 mapboxAccessToken='pk.eyJ1IjoieGF2aWVyamVhbiIsImEiOiJjbGUzYXl1dXAwM2g5M25tcHBhcnowc3pmIn0.5AXUHhsjd3pfaGVQObJ72w'
                 mapStyle='mapbox://styles/xavierjean/cle3b5naa008501pdz0ckgjk3'
                 style={{
@@ -58,13 +54,14 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
                 initialViewState={viewport}
                 
             >
-                {props.placesList.map((place) => (
+                {contextData.placesList?.map((place, i) => (
                     <Marker
                         latitude={place.latitude}
                         longitude={place.longitude}
                         onClick={() => handleMarkerClick(place.id)}
+                        key={i}
                     >
-                        <div className={place.id === props.selected ? 'marker selected' : 'marker'}></div>
+                        <div className={place.id === contextData.selected ? 'marker selected' : 'marker'}></div>
                     </Marker>
                 ))}
             </ReactMapGL>}

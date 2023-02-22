@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import context, { ContextProps } from "../context/context"
 
 interface HeaderProps {
-    displayBody: boolean
-    toggleBody(): void
+    
 }
 
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
+    const contextData: ContextProps = useContext(context)
+
     return (
         <div id="header" className="horizontal">
-            <div id="closeList" className="fullHeight" onClick={props.toggleBody}>
+            <div id="closeList" className="fullHeight" onClick={() => contextData.toggleBody()}>
                 <img alt="search" src="/img/arrow.png" className={
-                    props.displayBody ?
+                    contextData.displayBody ?
                     "fullHeight fullWidth reverse"
                     :
                     "fullHeight fullWidth"}
