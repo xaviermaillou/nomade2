@@ -33,9 +33,17 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
         })
     ), [])
 
+    const scrollToElementInList = (id: number) => {
+        document.getElementById('placeElement' + id)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
+    }
+
     const handleMarkerClick = (id: number) => {
         contextData.setSelected(id)
         contextData.toggleDisplay()
+        scrollToElementInList(id)
     }
 
     return (
@@ -53,7 +61,6 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
                     width: '100%',
                 }}
                 initialViewState={viewport}
-                
             >
                 {contextData.userPosition.fetched && <Marker
                         anchor="bottom"

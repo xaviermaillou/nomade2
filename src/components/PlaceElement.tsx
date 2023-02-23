@@ -13,6 +13,7 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
 
     return (
         <div
+            id={'placeElement' + props.data.id}
             className={props.isSelected ?
                 `${placeTypeColor[props.data.type]} leftLine element container vertical open`
                 :
