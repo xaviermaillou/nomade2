@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { wifiScore } from '../lib/dictionary';
+import { placeTypeColor, placeTypeName, wifiScore } from '../lib/dictionary';
 import { PlaceProps } from '../context/context';
 import context, { ContextProps } from "../context/context"
 
@@ -14,9 +14,9 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
     return (
         <div
             className={props.isSelected ?
-                'leftLine element container vertical open'
+                `${placeTypeColor[props.data.type]} leftLine element container vertical open`
                 :
-                'leftLine element container vertical'
+                `${placeTypeColor[props.data.type]} leftLine element container vertical`
             }            
         >
             <div
@@ -25,7 +25,7 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
             >
                 <div className='previewInfo vertical fullHeight'>
                     <div className='title'>{props.data.name}</div>
-                    <div className='subtitle'>{props.data.type}</div>
+                    <div className='subtitle'>{placeTypeName[props.data.type]}</div>
                 </div>
                 <div className="previewData vertical fullHeight">
                     {(contextData.userPosition.fetched && props.data.distance) &&

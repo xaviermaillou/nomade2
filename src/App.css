@@ -1,9 +1,13 @@
 :root {
   /* Colors */
-  --colorBlack: rgba(60,60,60,1);
+  --colorBlack: rgba(60, 60, 60, 1);
   --colorWhite: rgba(255, 255, 255, 1);
-  --colorWhiteTransparent: rgba(255, 255, 255, 0.8);
-  --colorRed: rgba(255, 0, 0, 1);
+  --colorRed: rgba(120, 0, 0, 1);
+  --colorBrown: rgba(120, 60, 0, 1);
+  --colorBlue: rgba(0, 0, 120, 1);
+  --colorCyan: rgba(0, 120, 120, 1);
+  --colorYellow: rgba(120, 120, 0, 1);
+  --colorGreen: rgba(0, 120, 0, 1);
 
   /* Spacings */
   --spacing1: 12px;
@@ -58,6 +62,21 @@
 }
 .leftLine {
   border-left: solid var(--borderWidth2) var(--colorBlack);
+}
+.leftLine.brown {
+  border-color: var(--colorBrown);
+}
+.leftLine.blue {
+  border-color: var(--colorBlue);
+}
+.leftLine.cyan {
+  border-color: var(--colorYellow);
+}
+.leftLine.yellow {
+  border-color: var(--colorYellow);
+}
+.leftLine.green {
+  border-color: var(--colorGreen);
 }
 
 .container {
@@ -162,24 +181,40 @@
   opacity: 1;
 }
 .userPosition {
+  height: 50px;
+  width: 50px;
   background-image: url('/public/img/position.png');
   background-size: cover;
-  width: 50px;
-  height: 50px;
   border-radius: 50%;
   opacity: 0.5;
 }
 .marker {
-  background-image: url('/public/img/pin.png');
-  background-size: cover;
-  width: 50px;
-  height: 50px;
+  height: 35px;
+  width: 35px;
+  background-color: var(--colorBlack);
   border-radius: 50%;
+  border-bottom-right-radius: 0%;
+  transform: rotate(45deg);
   cursor: pointer;
   opacity: 0.33;
 }
 .marker.selected {
   opacity: 1;
+}
+.marker.brown {
+  background-color: var(--colorBrown);
+}
+.marker.blue {
+  background-color: var(--colorBlue);
+}
+.marker.cyan {
+  background-color: var(--colorYellow);
+}
+.marker.yellow {
+  background-color: var(--colorYellow);
+}
+.marker.green {
+  background-color: var(--colorGreen);
 }
 
 #header {

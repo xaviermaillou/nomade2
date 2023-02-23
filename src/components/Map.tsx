@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import ReactMapGL, { Marker } from "react-map-gl"
 import context, { ContextProps } from "../context/context"
+import { placeTypeColor } from "../lib/dictionary"
 
 interface MapProps {
 
@@ -70,7 +71,11 @@ const Map:React.FunctionComponent<MapProps> = (props) => {
                         onClick={() => handleMarkerClick(place.id)}
                         key={i}
                     >
-                        <div className={place.id === contextData.selected ? 'marker selected' : 'marker'}></div>
+                        <div className={place.id === contextData.selected ?
+                            `${placeTypeColor[place.type]} marker selected`
+                            :
+                            `${placeTypeColor[place.type]} marker`}
+                        ></div>
                     </Marker>
                 ))}
             </ReactMapGL>}

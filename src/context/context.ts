@@ -12,7 +12,7 @@ export interface Position {
     latitude: number
     longitude: number
     distance?: number
-    type: string
+    type: number
     quiet: boolean
     solo: boolean
     gathering: boolean
