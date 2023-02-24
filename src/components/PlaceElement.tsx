@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { placeTypeColor, placeTypeName, wifiScore } from '../lib/dictionary';
 import { PlaceProps } from '../context/context';
 import context, { ContextProps } from "../context/context"
+import { fetchPlaceImg } from '../request';
 
 interface PlaceElementProps {
     data: PlaceProps
@@ -10,19 +11,23 @@ interface PlaceElementProps {
 
 const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
     const contextData: ContextProps = useContext(context)
-
+    
+    const handleClick = async () => {
+        contextData.setSelected(props.isSelected ? undefined : props.data.id)
+    }
+console.log(props.data)
     return (
         <div
             id={'placeElement' + props.data.id}
             className={props.isSelected ?
-                `${placeTypeColor[props.data.type]} leftLine element container vertical open`
+                `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth open`
                 :
-                `${placeTypeColor[props.data.type]} leftLine element container vertical`
+                `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth`
             }            
         >
             <div
                 className='preview horizontal fullWidth'
-                onClick={() => contextData.setSelected(props.isSelected ? undefined : props.data.id)}
+                onClick={() => handleClick()}
             >
                 <div className='previewInfo vertical fullHeight'>
                     <div className='title'>{props.data.name}</div>
@@ -39,6 +44,11 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                         <div>{wifiScore[props.data.wifi] || '?'}</div>
                     </div>
                 </div>
+            </div>
+            <div className="img fullWidth">
+                {props.data.img?.map((img) => (
+                    <img key={img.id} alt="img" src={img.path} className="fullWidth" />
+                ))}
             </div>
         </div>
     )

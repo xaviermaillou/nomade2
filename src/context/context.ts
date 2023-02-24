@@ -18,6 +18,12 @@ export interface Position {
     gathering: boolean
     wifi: number
     outlet: boolean
+    img: ImgProps[]
+}
+
+export interface ImgProps {
+  id: number
+  path: string
 }
 
 export interface ContextProps {
