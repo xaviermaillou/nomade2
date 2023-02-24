@@ -140,9 +140,18 @@
   font-size: var(--font1);
 }
 
-.list .element .img {
-  height: auto;
+.list .element .details {
   margin-top: var(--spacing2);
+}
+
+.list .element .feedback {
+  height: var(--size3);
+  justify-content: flex-start;
+}
+
+.list .element .img {
+  height: calc(100vw - (var(--size3) + (7 * var(--size2))));
+  overflow: hidden;
 }
 
 .list .element.open {

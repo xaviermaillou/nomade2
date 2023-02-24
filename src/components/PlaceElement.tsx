@@ -45,12 +45,24 @@ console.log(props.data)
                     </div>
                 </div>
             </div>
-            <div className="img fullWidth">
-                {props.data.img?.map((img) => (
-                    <img key={img.id} alt="img" src={img.path} className="fullWidth" />
-                ))}
+            <div className="details vertical fullWidth">
+                <div className="feedback vertical fullWidth">
+                    <div className="horizontal fullWidth">
+                        <div>Work alone: {props.data.solo ? 'Suitable' : 'Not suitable'}</div>
+                        <div>Quiet: {props.data.solo ? 'Yes' : 'No'}</div>
+                    </div>
+                    <div className="horizontal fullWidth">
+                        <div>Work group: {props.data.gathering ? 'Suitable' : 'Not suitable'}</div>
+                        <div>Outlets: {props.data.outlet ? 'Yes' : 'No'}</div>
+                    </div>
+                </div>
+                <div className="img horizontal fullWidth">
+                    {props.data.img?.map((img) => (
+                        <img key={img.id} alt="img" src={img.path} className="fullWidth" />
+                    ))}
+                </div>
             </div>
-        </div>
+            </div>
     )
 }
 
