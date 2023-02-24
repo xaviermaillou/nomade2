@@ -171,6 +171,11 @@
   height: calc(100vw - (var(--size3) + (8 * var(--size2))));
   overflow: hidden;
 }
+.list .element .img div {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .list .element.open {
   /* height: var(--size8); */

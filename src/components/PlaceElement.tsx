@@ -68,7 +68,7 @@ console.log(props.data)
                 </div>
                 <div className="img horizontal fullWidth">
                     {props.data.img?.map((img) => (
-                        <img key={img.id} alt="img" src={img.path} className="fullWidth" />
+                        <div key={img.id} className="fullWidth fullHeight" style={{backgroundImage: `url('${img.path}')`}}></div>
                     ))}
                 </div>
             </div>
