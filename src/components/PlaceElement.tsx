@@ -35,25 +35,35 @@ console.log(props.data)
                 </div>
                 <div className="previewData vertical fullHeight">
                     {(contextData.userPosition.fetched && props.data.distance) &&
-                        <div>{Math.round(props.data.distance).toLocaleString()} m</div>
+                        <div className="halfHeight">{Math.round(props.data.distance).toLocaleString()} m</div>
                     }
-                    <div className="horizontal">
-                        <div>
-                            <img className='fullHeight' alt='wifi' src='/img/wifi.png' />&nbsp;
-                        </div>
+                    <div className="halfHeight horizontal">
+                        <img className='fullHeight icon' alt='wifi' src='/img/wifi.png' />&nbsp;&nbsp;
                         <div>{wifiScore[props.data.wifi] || '?'}</div>
                     </div>
                 </div>
             </div>
             <div className="details vertical fullWidth">
                 <div className="feedback vertical fullWidth">
-                    <div className="horizontal fullWidth">
-                        <div>Work alone: {props.data.solo ? 'Suitable' : 'Not suitable'}</div>
-                        <div>Quiet: {props.data.solo ? 'Yes' : 'No'}</div>
+                    <div className="horizontal fullWidth halfHeight">
+                        <div className='horizontal fullHeight'>
+                            <img className={props.data.solo ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='solo' src='/img/solo.png' />&nbsp;
+                            <div>{props.data.solo ? 'To work alone' : 'X'}</div>
+                        </div>
+                        <div className='horizontal fullHeight'>
+                            <img className={props.data.quiet ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='quiet' src='/img/mute.png' />&nbsp;&nbsp;
+                            <div>{props.data.quiet ? 'Quiet' : 'X'}</div>
+                        </div>
                     </div>
-                    <div className="horizontal fullWidth">
-                        <div>Work group: {props.data.gathering ? 'Suitable' : 'Not suitable'}</div>
-                        <div>Outlets: {props.data.outlet ? 'Yes' : 'No'}</div>
+                    <div className="horizontal fullWidth halfHeight">
+                        <div className='horizontal fullHeight'>
+                            <img className={props.data.gathering ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='group' src='/img/group.png' />&nbsp;&nbsp;
+                            <div>{props.data.gathering ? 'To work in group' : 'X'}</div>
+                        </div>
+                        <div className='horizontal fullHeight'>
+                            <img className={props.data.outlet ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='outlet' src='/img/outlet.png' />&nbsp;
+                            <div>{props.data.outlet ? 'Outlets available' : 'X'}</div>
+                        </div>
                     </div>
                 </div>
                 <div className="img horizontal fullWidth">
