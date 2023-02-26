@@ -24,9 +24,12 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
         fetched: false
     })
 
+    const [searchString, setSearchString] = useState<string>('')
+
     const fetchPlacesAndSetState = async () => {
+        console.log('TRIGGERED')
         if (userPosition.fetched && mapLoaded) {
-            const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude)
+            const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
             setTimeout(() => {
                 setPlacesList(result)
             }, 2000)
@@ -47,7 +50,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     
     useEffect(() => {
         fetchPlacesAndSetState()
-    }, [userPosition.fetched, mapLoaded])
+    }, [userPosition.fetched, mapLoaded, searchString])
 
     useEffect(() => {
         fetchPlaceImgAndSetState()
@@ -66,7 +69,9 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             userPosition,
             setUserPosition,
             mapLoaded,
-            setMapLoaded
+            setMapLoaded,
+            searchString,
+            setSearchString
         } as ContextProps}>
             {props.children}
         </context.Provider>

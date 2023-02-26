@@ -39,6 +39,8 @@ export interface ContextProps {
     setUserPosition: (arg: Position) => void,
     mapLoaded: boolean,
     setMapLoaded: (arg: boolean) => void,
+    searchString: string,
+    setSearchString: (arg: string) => void,
 }
 
 const context: React.Context<ContextProps> = React.createContext({} as ContextProps)

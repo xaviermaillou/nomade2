@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import context, { ContextProps } from "../context/context"
 import Search from "./Search";
+import context, { ContextProps } from "../context/context"
 
 interface HeaderProps {
     

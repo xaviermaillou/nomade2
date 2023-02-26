@@ -12,7 +12,7 @@ const Map:React.FunctionComponent = () => {
         longitude: contextData.userPosition?.longitude,
         zoom: 15,
     })
-console.log(contextData.mapLoaded)
+
     useEffect(() => (
         navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
             console.log('geolocation hook')
