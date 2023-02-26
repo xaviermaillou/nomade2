@@ -27,7 +27,7 @@ export interface ImgProps {
 }
 
 export interface ContextProps {
-    placesList?: PlaceProps[],
+    placesList: PlaceProps[],
     selected?: number,
     setSelected: (arg?: number) => void,
     displayBody?: boolean,
@@ -37,6 +37,8 @@ export interface ContextProps {
     toggleDisplay: (arg: void) => void,
     userPosition: Position,
     setUserPosition: (arg: Position) => void,
+    mapLoaded: boolean,
+    setMapLoaded: (arg: boolean) => void,
 }
 
 const context: React.Context<ContextProps> = React.createContext({} as ContextProps)

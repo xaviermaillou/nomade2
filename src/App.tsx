@@ -13,7 +13,7 @@ const App: React.FunctionComponent = () => {
       <Map />
       <Header />
       <div id='body' className={contextData.displayBody ? 'open' : ''}>
-        <PlacesList />
+        {contextData.placesList.length > 0 && <PlacesList />}
       </div>
     </div>
   );

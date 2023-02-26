@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { PlaceProps, Position } from '../context/context';
+import React, { useContext } from 'react';
 import PlaceElement from './PlaceElement';
 import context, { ContextProps } from "../context/context"
 

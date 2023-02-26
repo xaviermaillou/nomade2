@@ -1,3 +1,12 @@
+@keyframes placesListOpening {
+  from {
+    top: 100%;
+  }
+  to {
+    top: 0px;
+  }
+}
+
 :root {
   /* Colors */
   --colorBlack: rgba(60, 60, 60, 1);
@@ -37,6 +46,11 @@
   --borderWidth1: 2px;
   --borderWidth2: 5px;
   --borderWidth3: 20px;
+
+  /* Border radius */
+  --borderRadius1: 6px;
+  --borderRadius2: 12px;
+  --borderRadius3: 24px;
 }
 
 * {
@@ -116,6 +130,21 @@
   opacity: 0.5;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: var(--colorWhite);
+}
+.loading img {
+  width: 50%;
+  min-width: var(--size3);
+  max-width: var(--size6);
+}
+
 .list {
   display: flex;
   flex-direction: column;
@@ -129,6 +158,9 @@
   flex-grow: 0;
   flex-shrink: 0;
   background-color: var(--colorWhite);
+  border-top-right-radius: var(--borderRadius1);
+  border-bottom-right-radius: var(--borderRadius1);
+
 }
 .list .element:last-child {
   margin-bottom: var(--spacing5);
@@ -167,14 +199,16 @@
   font-size: var(--font1);
 }
 
-.list .element .img {
+.list .element .carrousel {
   height: calc(100vw - (var(--size3) + (8 * var(--size2))));
+  border-radius: var(--borderRadius1);
   overflow: hidden;
 }
-.list .element .img div {
+.list .element .carrousel .img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .list .element.open {
@@ -275,9 +309,15 @@
 
 #search {
   width: var(--size4);
-  border-radius: 50%;
+  border-radius: var(--size3);
   background-color: var(--colorWhite);
   padding: var(--spacing2);
+  flex-direction: row-reverse;
+  opacity: 0.66;
+}
+#search.open {
+  width: calc(100vw - (2 * var(--spacing2) + var(--size4)));
+  opacity: 1;
 }
 
 #body {
@@ -292,6 +332,7 @@
 }
 
 #mainList {
+  animation: placesListOpening 0.4s ease-out;
   height: 100%;
   width: 100%;
   padding-top: calc(var(--spacing5) + var(--spacing2));

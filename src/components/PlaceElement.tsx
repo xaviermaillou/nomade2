@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { placeTypeColor, placeTypeName, wifiScore } from '../lib/dictionary';
 import { PlaceProps } from '../context/context';
 import context, { ContextProps } from "../context/context"
-import { fetchPlaceImg } from '../request';
 
 interface PlaceElementProps {
     data: PlaceProps
@@ -15,7 +14,7 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
     const handleClick = async () => {
         contextData.setSelected(props.isSelected ? undefined : props.data.id)
     }
-console.log(props.data)
+
     return (
         <div
             id={'placeElement' + props.data.id}
@@ -66,9 +65,9 @@ console.log(props.data)
                         </div>
                     </div>
                 </div>
-                <div className="img horizontal fullWidth">
+                <div className="carrousel horizontal fullWidth">
                     {props.data.img?.map((img) => (
-                        <div key={img.id} className="fullWidth fullHeight" style={{backgroundImage: `url('${img.path}')`}}></div>
+                        <div key={img.id} className="img fullWidth fullHeight" style={{backgroundImage: `url('${img.path}')`}}></div>
                     ))}
                 </div>
             </div>

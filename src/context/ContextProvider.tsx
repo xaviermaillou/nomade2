@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from "react"
+import React, { ReactElement, useEffect, useState } from "react"
 import { fetchPlaceImg, fetchPlacesList } from "../request"
 import context, { ContextProps, ImgProps, PlaceProps, Position } from "./context"
 
@@ -16,6 +16,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
         setDisplayBody(!displayBody)
         setDisplayPlacesList(!displayPlacesList)
     }
+    const [mapLoaded, setMapLoaded] = useState<boolean>(false)
 
     const [userPosition, setUserPosition] = useState<Position>({
         latitude: 49.60833406110522,
@@ -24,8 +25,12 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     })
 
     const fetchPlacesAndSetState = async () => {
-        const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude)
-        setPlacesList(result)
+        if (userPosition.fetched && mapLoaded) {
+            const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude)
+            setTimeout(() => {
+                setPlacesList(result)
+            }, 2000)
+        }
     }
 
     const fetchPlaceImgAndSetState = async () => {
@@ -42,7 +47,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     
     useEffect(() => {
         fetchPlacesAndSetState()
-    }, [userPosition.fetched])
+    }, [userPosition.fetched, mapLoaded])
 
     useEffect(() => {
         fetchPlaceImgAndSetState()
@@ -59,7 +64,9 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             setDisplayPlacesList,
             toggleDisplay,
             userPosition,
-            setUserPosition
+            setUserPosition,
+            mapLoaded,
+            setMapLoaded
         } as ContextProps}>
             {props.children}
         </context.Provider>
