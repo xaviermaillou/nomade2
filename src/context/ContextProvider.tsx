@@ -26,13 +26,16 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const [searchString, setSearchString] = useState<string>('')
 
+    const [firstSearchExecuted, setFirstSearchExecuted] = useState<boolean>(false)
+
     const fetchPlacesAndSetState = async () => {
-        console.log('TRIGGERED')
         if (userPosition.fetched && mapLoaded) {
             const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
             setTimeout(() => {
                 setPlacesList(result)
-            }, 2000)
+                setFirstSearchExecuted(true)
+                setSelected(undefined)
+            }, firstSearchExecuted ? 0 : 1000)
         }
     }
 
