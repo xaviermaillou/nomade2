@@ -19,6 +19,16 @@ const Search:React.FunctionComponent = () => {
         runSearchTimer(search)
     }
 
+    const ref = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) setSelected(false)
+        }
+        window.addEventListener('click', handleClickOutside)
+        return () => window.removeEventListener('click', handleClickOutside)
+    }, [ref])
+
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
@@ -26,7 +36,7 @@ const Search:React.FunctionComponent = () => {
     }, [selected])
 
     return (
-        <div id="search" className={selected ? "fullHeight horizontal open" : "fullHeight horizontal"}>
+        <div ref={ref} id="search" className={selected ? "fullHeight horizontal open" : "fullHeight horizontal"}>
             <img onClick={() => setSelected(!selected)} alt="search" src="/img/search.png" className="fullHeight" />
             <input
                 value={searchCopy}
