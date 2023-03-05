@@ -6,7 +6,7 @@ import { placeTypeColor } from "../lib/dictionary"
 const Map:React.FunctionComponent = () => {
     const contextData: ContextProps = useContext(context)
 
-    const [displayMap, setDisplayMap] = useState<boolean>(false)
+    const [displayMap, setDisplayMap] = useState<boolean>(true)
     const [viewport, setViewport] = useState({
         latitude: contextData.userPosition?.latitude,
         longitude: contextData.userPosition?.longitude,
@@ -15,7 +15,6 @@ const Map:React.FunctionComponent = () => {
 
     useEffect(() => (
         navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-            console.log('geolocation hook')
             contextData.setUserPosition({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
@@ -28,7 +27,6 @@ const Map:React.FunctionComponent = () => {
                     longitude: position.coords.longitude
                 }
             })
-            setDisplayMap(true)
         }, (err) => {
             if (err) throw err
         }, {

@@ -218,12 +218,13 @@ input:placeholder-shown {
   height: calc(100vw - (var(--size3) + (8 * var(--size2))));
   border-radius: var(--borderRadius1);
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 .list .element .carrousel .img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: rgba(0, 0, 0, 0.1);
+  filter: grayscale(75%);
 }
 
 .list .element.open {
@@ -318,7 +319,7 @@ input:placeholder-shown {
 #closeList {
   padding: var(--spacing2);
   border-radius: var(--size3);
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0))
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
 }
 #closeList img.reverse {
   transform: rotate(180deg);

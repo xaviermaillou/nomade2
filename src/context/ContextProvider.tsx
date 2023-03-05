@@ -42,12 +42,14 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     const fetchPlaceImgAndSetState = async () => {
         if (selected) {
             const result: ImgProps[] = await fetchPlaceImg(selected)
-            setPlacesList((places) => {
-                return places.map((place) => {
-                    if (place.id === selected) place.img = result
-                    return place
+            setTimeout(() => {
+                setPlacesList((places) => {
+                    return places.map((place) => {
+                        if (place.id === selected) place.img = result
+                        return place
+                    })
                 })
-            })
+            }, 200)
         }
     }
     
