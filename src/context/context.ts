@@ -34,7 +34,7 @@ export interface ContextProps {
     setDisplayBody: (arg: boolean) => void,
     displayPlacesList?: boolean,
     setDisplayPlacesList: (arg: boolean) => void,
-    toggleDisplay: (arg: void) => void,
+    toggleDisplay: (arg?: boolean) => void,
     userPosition: Position,
     setUserPosition: (arg: Position) => void,
     mapLoaded: boolean,

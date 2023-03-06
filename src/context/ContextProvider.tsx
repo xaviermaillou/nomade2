@@ -12,9 +12,9 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     
     const [displayBody, setDisplayBody] = useState<boolean>(true)
     const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
-    const toggleDisplay = () => {
-        setDisplayBody(!displayBody)
-        setDisplayPlacesList(!displayPlacesList)
+    const toggleDisplay = (arg?: boolean) => {
+        setDisplayBody(arg || !displayBody)
+        setDisplayPlacesList(arg || !displayPlacesList)
     }
     const [mapLoaded, setMapLoaded] = useState<boolean>(false)
 

@@ -44,7 +44,7 @@ const Map:React.FunctionComponent = () => {
 
     const handleMarkerClick = (id: number) => {
         contextData.setSelected(id)
-        contextData.toggleDisplay()
+        contextData.toggleDisplay(true)
         scrollToElementInList(id)
     }
 

@@ -51,6 +51,17 @@
   --borderRadius1: 6px;
   --borderRadius2: 12px;
   --borderRadius3: 24px;
+
+  /* Variables */
+  --contentWidth: 100vw;
+  --mapOpacity: 0.2;
+}
+
+@media (min-width:961px) {
+  :root {
+    --contentWidth: 33vw;
+    --mapOpacity: 1;
+  }
 }
 
 * {
@@ -215,7 +226,7 @@ input:placeholder-shown {
 }
 
 .list .element .carrousel {
-  height: calc(100vw - (var(--size3) + (8 * var(--size2))));
+  height: calc(var(--contentWidth) - (var(--size3) + (8 * var(--size2))));
   border-radius: var(--borderRadius1);
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.05);
@@ -228,8 +239,7 @@ input:placeholder-shown {
 }
 
 .list .element.open {
-  /* height: var(--size8); */
-  height: calc(100vw - (2 * var(--spacing2)));
+  height: calc(var(--contentWidth) - (2 * var(--spacing2)));
 }
 
 .title {
@@ -260,7 +270,7 @@ input:placeholder-shown {
   width: 100%;
   position: fixed;
   transition-duration: 0.4s;
-  opacity: 0.2;
+  opacity: var(--mapOpacity);
 }
 #mapContainer.hidden {
   opacity: 0;
@@ -307,7 +317,7 @@ input:placeholder-shown {
 
 #header {
   height: var(--size4);
-  width: 100%;
+  width: var(--contentWidth);
   margin: var(--spacing2) 0px;
   padding: 0px var(--spacing2);
   position: fixed;
@@ -334,14 +344,14 @@ input:placeholder-shown {
   opacity: 0.66;
 }
 #search.open {
-  width: calc(100vw - (2 * var(--spacing2) + var(--size4)));
+  width: calc(var(--contentWidth) - (2 * var(--spacing2) + var(--size4)));
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
   opacity: 1;
 }
 
 #body {
   height: 100%;
-  width: 100%;
+  width: var(--contentWidth);
   position: absolute;
   left: -100%;
   z-index: 900;
@@ -353,7 +363,7 @@ input:placeholder-shown {
 #mainList {
   animation: placesListOpening 0.2s ease-out;
   height: 100%;
-  width: 100%;
+  width: var(--contentWidth);
   padding-top: calc(var(--spacing5) + var(--spacing2));
   position: absolute;
   top: 0px;
@@ -361,4 +371,19 @@ input:placeholder-shown {
 }
 #mainList.open {
   left: 0%;
+}
+
+@media (min-width:961px) {
+  #body {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  #header {
+    flex-direction: row-reverse;
+  }
+  #closeList {
+    display: none;
+  }
+  #search.open {
+    width: calc(var(--contentWidth) - (2 * var(--spacing2)));
+  }
 }
