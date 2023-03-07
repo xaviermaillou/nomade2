@@ -79,6 +79,10 @@
   display: none;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .outlined {
   border: solid var(--borderWidth2) var(--colorBlack);
 }

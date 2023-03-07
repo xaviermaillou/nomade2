@@ -25,7 +25,7 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
             }            
         >
             <div
-                className='preview horizontal fullWidth'
+                className='preview horizontal fullWidth clickable'
                 onClick={() => handleClick()}
             >
                 <div className='previewInfo vertical fullHeight'>

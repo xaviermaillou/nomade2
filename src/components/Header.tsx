@@ -11,7 +11,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
     return (
         <div id="header" className="horizontal">
-            <div id="closeList" className="fullHeight" onClick={() => contextData.toggleDisplay()}>
+            <div id="closeList" className="fullHeight clickable" onClick={() => contextData.toggleDisplay()}>
                 <img alt={contextData.displayBody ? "close" : "open"} src="/img/arrow.png" className={
                     contextData.displayBody ?
                     "fullHeight reverse"

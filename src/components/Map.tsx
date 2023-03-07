@@ -88,9 +88,9 @@ const Map:React.FunctionComponent = () => {
                             key={i}
                         >
                             <div className={place.id === contextData.selected ?
-                                `${placeTypeColor[place.type]} marker selected`
+                                `${placeTypeColor[place.type]} marker clickable  selected`
                                 :
-                                `${placeTypeColor[place.type]} marker`}
+                                `${placeTypeColor[place.type]} marker clickable `}
                             ></div>
                         </Marker>
                     ))}
