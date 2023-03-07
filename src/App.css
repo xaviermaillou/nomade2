@@ -390,4 +390,7 @@ input:placeholder-shown {
   #search.open {
     width: calc(var(--contentWidth) - (2 * var(--spacing2)));
   }
+  #mapContainer {
+    width: 130%;
+  }
 }

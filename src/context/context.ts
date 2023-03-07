@@ -41,6 +41,7 @@ export interface ContextProps {
     setMapLoaded: (arg: boolean) => void,
     searchString: string,
     setSearchString: (arg: string) => void,
+    desktopDisplay: boolean,
 }
 
 const context: React.Context<ContextProps> = React.createContext({} as ContextProps)

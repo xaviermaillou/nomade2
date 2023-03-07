@@ -28,6 +28,8 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const [firstSearchExecuted, setFirstSearchExecuted] = useState<boolean>(false)
 
+    const [desktopDisplay] = useState<boolean>(window.innerWidth >= 961)
+
     const fetchPlacesAndSetState = async () => {
         if (userPosition.fetched && mapLoaded) {
             const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
@@ -76,7 +78,8 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             mapLoaded,
             setMapLoaded,
             searchString,
-            setSearchString
+            setSearchString,
+            desktopDisplay
         } as ContextProps}>
             {props.children}
         </context.Provider>
