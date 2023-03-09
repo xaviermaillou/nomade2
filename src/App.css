@@ -111,6 +111,9 @@
 .container {
   padding: var(--spacing2);
 }
+.inlineContainer {
+  padding: 0px var(--spacing2);
+}
 
 .icon {
   padding: 5px 0px;
@@ -174,6 +177,10 @@ input:placeholder-shown {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* .closingCross {
+  
+} */
 
 .list {
   display: flex;
@@ -360,7 +367,6 @@ input:placeholder-shown {
   width: var(--size4);
   border-radius: var(--size3);
   background-color: var(--colorWhite);
-  padding: var(--spacing2);
   flex-direction: row-reverse;
   opacity: 0.66;
   z-index: 1100;

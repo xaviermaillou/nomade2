@@ -19,6 +19,11 @@ const Search:React.FunctionComponent = () => {
         runSearchTimer(search)
     }
 
+    const handleErasing = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation()
+        handleSearch('')
+    }
+
     const ref = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -36,8 +41,13 @@ const Search:React.FunctionComponent = () => {
     }, [selected])
 
     return (
-        <div ref={ref} id="search" className={selected ? "fullHeight horizontal open" : "fullHeight horizontal"}>
+        <div ref={ref} id="search" className={selected ? "container fullHeight horizontal open" : "container fullHeight horizontal"}>
             <img onClick={() => setSelected(!selected)} alt="search" src="/img/search.png" className="fullHeight clickable" />
+            {(selected && searchCopy.length > 0) &&
+                <div onClick={handleErasing} className="closingCross halfHeight horizontal inlineContainer">
+                    <img className="fullHeight" alt="" src="/img/close.png" />
+                </div>
+            }
             <input
                 value={searchCopy}
                 onChange={(e) => handleSearch(e.target.value)}
