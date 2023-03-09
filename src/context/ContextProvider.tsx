@@ -28,7 +28,20 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const [firstSearchExecuted, setFirstSearchExecuted] = useState<boolean>(false)
 
-    const [desktopDisplay] = useState<boolean>(window.innerWidth >= 961)
+    const [desktopDisplay, setDesktopDisplay] = useState<boolean>(window.innerWidth >= 961)
+    const handleWindowResize = (): void => {
+        const isDesktopDisplay = window.innerWidth >= 961
+        setDesktopDisplay(isDesktopDisplay)
+        if (isDesktopDisplay) toggleDisplay(true)
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowResize)
+        return () => {
+            window.removeEventListener('resize', handleWindowResize)
+        }
+    }, [])
+
+    const [displayLogo, setDisplayLogo] = useState<boolean>(true)
 
     const fetchPlacesAndSetState = async () => {
         if (userPosition.fetched && mapLoaded) {
@@ -79,7 +92,9 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             setMapLoaded,
             searchString,
             setSearchString,
-            desktopDisplay
+            desktopDisplay,
+            displayLogo,
+            setDisplayLogo,
         } as ContextProps}>
             {props.children}
         </context.Provider>

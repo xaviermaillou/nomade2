@@ -42,6 +42,8 @@ export interface ContextProps {
     searchString: string,
     setSearchString: (arg: string) => void,
     desktopDisplay: boolean,
+    displayLogo: boolean,
+    setDisplayLogo: (arg: boolean) => void,
 }
 
 const context: React.Context<ContextProps> = React.createContext({} as ContextProps)

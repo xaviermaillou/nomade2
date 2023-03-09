@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlaceElement from './PlaceElement';
 import context, { ContextProps } from "../context/context"
 
@@ -8,6 +8,17 @@ interface PlacesListProps {
 
 const PlacesList: React.FunctionComponent<PlacesListProps> = (props) => {
     const contextData: ContextProps = useContext(context)
+
+    const handleScroll = (e: Event): void => {
+        contextData.setDisplayLogo((e.target as HTMLDivElement).scrollTop < 50)
+    }
+
+    useEffect(() => {
+        document.getElementById('mainList')?.addEventListener('scroll', handleScroll)
+        return () => {
+            document.getElementById('mainList')?.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
 
     return (
         <div id='mainList' className={

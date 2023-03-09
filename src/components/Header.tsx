@@ -19,6 +19,7 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
                     "fullHeight"}
                 />
             </div>
+            <div id="logo" className={(contextData.displayLogo || !contextData.displayBody) ? "fullHeight" : "fullHeight hidden"}>coffeeto.work</div>
             <Search />
         </div>
     )
