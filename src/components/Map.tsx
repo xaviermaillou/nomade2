@@ -44,10 +44,12 @@ const Map:React.FunctionComponent = () => {
         // The basis to remove is the height that each elements earns when selected
         // so the total height of the opened element (equal to list's width minus padding (48)) minus its preview height (96)
         // For some reason to determine later, if the element was below the center of the list, we compensate twice this escessive height
-        const heightToCompensate = elementWasBelow ? 2 * (list.clientWidth - 48 - 96) : list.clientWidth - 48 - 96
-        const verticalPosition = elementToShow.offsetTop - heightToCompensate
+        const openedElementHeight = list.clientWidth - 48
+        const closedElementHeight = 96
+        const heightToCompensate = elementWasBelow ? 2 * (openedElementHeight - closedElementHeight) : openedElementHeight - closedElementHeight
+        const verticalPositionToAccess = elementToShow.offsetTop - heightToCompensate + (openedElementHeight / 2)
 
-        list.scrollTo({top: verticalPosition, behavior: 'smooth'})
+        list.scrollTo({top: verticalPositionToAccess, behavior: 'smooth'})
     }
 
     const handleMarkerClick = (id: number) => {
