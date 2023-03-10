@@ -36,10 +36,18 @@ const Map:React.FunctionComponent = () => {
     ), [])
 
     const scrollToElementInList = (id: number) => {
-        document.getElementById('placeElement' + id)?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        })
+        // Here the issue comes from the fact that elements' heights change when selection changes
+        const list = document.getElementById('mainList') as HTMLDivElement
+        const elementToShow = document.getElementById('placeElement' + id) as HTMLDivElement
+        // The excessive height to remove changes whether the element newly selected is below or above the center of the list
+        const elementWasBelow = elementToShow.getBoundingClientRect().top > (window.innerHeight / 2)
+        // The basis to remove is the height that each elements earns when selected
+        // so the total height of the opened element (equal to list's width minus padding (48)) minus its preview height (96)
+        // For some reason to determine later, if the element was below the center of the list, we compensate twice this escessive height
+        const heightToCompensate = elementWasBelow ? 2 * (list.clientWidth - 48 - 96) : list.clientWidth - 48 - 96
+        const verticalPosition = elementToShow.offsetTop - heightToCompensate
+
+        list.scrollTo({top: verticalPosition, behavior: 'smooth'})
     }
 
     const handleMarkerClick = (id: number) => {

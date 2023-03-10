@@ -208,12 +208,12 @@ input:placeholder-shown {
   height: calc(var(--size5) - (2 * var(--spacing2)));
 }
 .previewInfo {
-  width: 70%;
+  width: 66%;
   justify-content: center;
   align-items: flex-start;
 }
 .previewData {
-  width: 30%;
+  width: 33%;
   overflow-x: hidden;
   align-items: flex-end;
   justify-content: flex-end;
@@ -234,6 +234,12 @@ input:placeholder-shown {
 
 .list .element .feedback div {
   font-size: var(--font1);
+}
+.list .element .feedback div div {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  justify-content: flex-start;
 }
 
 .list .element .carrousel {
