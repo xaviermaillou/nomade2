@@ -24,6 +24,10 @@
   --spacing3: 48px;
   --spacing4: 72px;
   --spacing5: 96px;
+  --spacing6: 192px;
+  --spacing7: 288px;
+  --spacing8: 384px;
+  --spacing9: 768px;
 
   /* Font sizes */
   --size1: 12px;
@@ -166,7 +170,7 @@
 input {
   background: none;
   border: none;
-  font-size: var(--font2);
+  font-size: var(--font3);
 }
 input:focus {
   outline: none;
@@ -200,7 +204,10 @@ input:placeholder-shown {
 
 }
 .list .element:last-child {
-  margin-bottom: var(--spacing5);
+  margin-bottom: 96px;
+}
+.list .element:last-child.temporaryMargin {
+  margin-bottom: 100vh;
 }
 
 .list .element .preview {
@@ -349,9 +356,10 @@ input:placeholder-shown {
   width: calc(100% - 2 * var(--size5));
   padding: var(--spacing2);
   text-align: center;
-  font-family: monospace;
+  font-family: 'Courier New', Courier, monospace;;
   font-size: var(--font4);
   font-weight: 900;
+  line-height: 100%;
   color: var(--colorBlack);
   opacity: 0.5;
   z-index: 800;

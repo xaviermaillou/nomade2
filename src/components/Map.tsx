@@ -35,27 +35,33 @@ const Map:React.FunctionComponent = () => {
         })
     ), [])
 
-    const scrollToElementInList = (id: number) => {
-        // Here the issue comes from the fact that elements' heights change when selection changes
+    const scrollToElementInList = (id: number, previousId?: number) => {
+        console.log('________________________')
         const list = document.getElementById('mainList') as HTMLDivElement
+        (list.lastChild as HTMLDivElement).classList.add('temporaryMargin')
         const elementToShow = document.getElementById('placeElement' + id) as HTMLDivElement
-        // The excessive height to remove changes whether the element newly selected is below or above the center of the list
-        const elementWasBelow = elementToShow.getBoundingClientRect().top > (window.innerHeight / 2)
-        // The basis to remove is the height that each elements earns when selected
-        // so the total height of the opened element (equal to list's width minus padding (48)) minus its preview height (96)
-        // For some reason to determine later, if the element was below the center of the list, we compensate twice this escessive height
+
+        let heightToCompensate = 0
         const openedElementHeight = list.clientWidth - 48
         const closedElementHeight = 96
-        const heightToCompensate = elementWasBelow ? 2 * (openedElementHeight - closedElementHeight) : openedElementHeight - closedElementHeight
-        const verticalPositionToAccess = elementToShow.offsetTop - heightToCompensate + (openedElementHeight / 2)
 
+        if (previousId && previousId !== id) {
+            const previousElement = document.getElementById('placeElement' + previousId) as HTMLDivElement
+            const newElementIsBelowPrevious = previousElement.compareDocumentPosition(elementToShow) === 4
+            if (newElementIsBelowPrevious) heightToCompensate = openedElementHeight - closedElementHeight
+        }
+
+        const verticalPositionToAccess = (elementToShow.offsetTop - ((window.innerHeight - openedElementHeight) / 2)) - heightToCompensate
+        
         list.scrollTo({top: verticalPositionToAccess, behavior: 'smooth'})
+        ;(list.lastChild as HTMLDivElement).classList.remove('temporaryMargin')
     }
 
     const handleMarkerClick = (id: number) => {
+        const previousId = contextData.selected
         contextData.setSelected(id)
         contextData.toggleDisplay(true)
-        scrollToElementInList(id)
+        scrollToElementInList(id, previousId)
     }
 
     return (
