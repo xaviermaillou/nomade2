@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './App.css';
+import Body from './components/Body';
 import Header from './components/Header';
 import Map from './components/Map';
-import PlacesList from './components/PlacesList';
 import context, { ContextProps } from './context/context';
 
 const App: React.FunctionComponent = () => {
@@ -12,9 +12,7 @@ const App: React.FunctionComponent = () => {
     <div id="app">
       <Map />
       <Header />
-      <div id='body' className={contextData.displayBody ? 'open' : ''}>
-        {contextData.placesList.length > 0 && <PlacesList />}
-      </div>
+      <Body />
     </div>
   );
 }

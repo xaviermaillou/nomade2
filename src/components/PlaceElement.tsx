@@ -12,6 +12,7 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
     const contextData: ContextProps = useContext(context)
     
     const handleClick = async () => {
+        contextData.toggleDisplay(true)
         contextData.setSelected(props.isSelected ? undefined : props.data.id)
     }
 
@@ -19,7 +20,11 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
         <div
             id={'placeElement' + props.data.id}
             className={props.isSelected ?
-                `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth open`
+                (contextData.displayBody ?
+                    `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth open`
+                    :
+                    `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth onTop`
+                )
                 :
                 `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth`
             }            

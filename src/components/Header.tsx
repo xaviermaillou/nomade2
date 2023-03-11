@@ -11,15 +11,13 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
     return (
         <div id="header" className="horizontal">
-            <div id="closeList" className="fullHeight clickable" onClick={() => contextData.toggleDisplay()}>
-                <img alt={contextData.displayBody ? "close" : "open"} src="/img/arrow.png" className={
-                    contextData.displayBody ?
-                    "fullHeight reverse"
-                    :
-                    "fullHeight"}
-                />
+            <div id="user" className="container fullHeight clickable horizontal">
+                <img alt="user" src="/img/user.png" className="fullHeight" />
             </div>
-            <div id="logo" className={(contextData.displayLogo || !contextData.displayBody) ? "fullHeight" : "fullHeight hidden"}>coffeeto.work</div>
+            <div id="closeListHeader" className={(contextData.displayLogo || !contextData.displayBody) ? "container fullHeight hidden" : "container fullHeight"} onClick={() => contextData.toggleDisplay()}>
+                <img alt="close" src="/img/arrow.png" className="fullHeight" />
+            </div>
+            <div id="logo" className={(contextData.displayLogo || !contextData.displayBody) ? "container fullHeight" : "container fullHeight hidden"}>coffeeto.work</div>
             <Search />
         </div>
     )

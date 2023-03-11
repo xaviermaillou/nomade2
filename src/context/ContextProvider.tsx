@@ -13,8 +13,10 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     const [displayBody, setDisplayBody] = useState<boolean>(true)
     const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
     const toggleDisplay = (arg?: boolean) => {
+        if (displayBody) setDisplayLogo(true)
         setDisplayBody(arg || !displayBody)
         setDisplayPlacesList(arg || !displayPlacesList)
+        ;(document.getElementById('mainList') as HTMLDivElement).scrollTop = 0
     }
     const [mapLoaded, setMapLoaded] = useState<boolean>(false)
 

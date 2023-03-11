@@ -192,7 +192,7 @@ input:placeholder-shown {
   overflow-x: hidden;
   overflow-y: scroll;
 }
-.list .element {
+#mainList .element {
   height: var(--size5);
   overflow: hidden;
   margin-bottom: var(--spacing2);
@@ -201,16 +201,19 @@ input:placeholder-shown {
   background-color: var(--colorWhite);
   border-top-right-radius: var(--borderRadius1);
   border-bottom-right-radius: var(--borderRadius1);
-
+  order: 2 !important;
 }
-.list .element:last-child {
+#mainList .element.onTop {
+  order: 1 !important;
+}
+#mainList .element:last-child {
   margin-bottom: 96px;
 }
-.list .element:last-child.temporaryMargin {
+#mainList .element:last-child.temporaryMargin {
   margin-bottom: 100vh;
 }
 
-.list .element .preview {
+#mainList .element .preview {
   /* The height is calculated based on closed element height */
   height: calc(var(--size5) - (2 * var(--spacing2)));
 }
@@ -229,40 +232,36 @@ input:placeholder-shown {
   font-size: var(--font1);
 }
 
-/* .list .element .details {
-  
-} */
-
-.list .element .feedback {
+#mainList .element .feedback {
   height: var(--size3);
   margin: var(--spacing2) 0px;
   justify-content: flex-start;
 }
 
-.list .element .feedback div {
+#mainList .element .feedback div {
   font-size: var(--font1);
 }
-.list .element .feedback div div {
+#mainList .element .feedback div div {
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
   justify-content: flex-start;
 }
 
-.list .element .carrousel {
+#mainList .element .carrousel {
   height: calc(var(--contentWidth) - (var(--size3) + (8 * var(--size2))));
   border-radius: var(--borderRadius1);
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.05);
 }
-.list .element .carrousel .img {
+#mainList .element .carrousel .img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   filter: grayscale(75%);
 }
 
-.list .element.open {
+#mainList .element.open {
   height: calc(var(--contentWidth) - (2 * var(--spacing2)));
 }
 
@@ -352,9 +351,13 @@ input:placeholder-shown {
 
 #logo {
   position: absolute;
+  left: 0px;
+  width: 100%;
   left: var(--spacing5);
   width: calc(100% - 2 * var(--size5));
   padding: var(--spacing2);
+  left: 0px;
+  width: 100%;
   text-align: center;
   font-family: 'Courier New', Courier, monospace;;
   font-size: var(--font4);
@@ -368,13 +371,38 @@ input:placeholder-shown {
   opacity: 0;
 }
 
-#closeList {
-  padding: var(--spacing2);
+#user {
+  margin-left: var(--borderWidth2);
+  background-color: var(--colorWhite);
   border-radius: var(--size3);
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  opacity: 0.66;
+}
+
+#closeListHeader {
+  transform: translateX(-3px);
+  justify-content: center;
+  display: block;
+  z-index: 1100;
+}
+#closeListHeader.hidden {
+  display: none;
+}
+#closeList {
+  height: var(--size2);
+  margin-bottom: var(--spacing1);
+  background: none;
+  z-index: 1100;
+  justify-content: center;
+  opacity: 1;
+}
+#closeList.hidden {
+  opacity: 0;
+}
+#closeList img, #closeListHeader img {
+  transform: rotate(90deg);
 }
 #closeList img.reverse {
-  transform: rotate(180deg);
+  transform: rotate(270deg);
 }
 
 #search {
@@ -392,43 +420,42 @@ input:placeholder-shown {
 }
 
 #body {
-  height: 100%;
+  height: calc(var(--size4) + var(--size4) + var(--size1));
   width: var(--contentWidth);
+  overflow: hidden;
   position: absolute;
-  left: -100%;
+  top: calc(100% - (var(--size4) + var(--size4) + var(--size1)));
+  left: 0px;
   z-index: 900;
 }
 #body.open {
-  left: 0%;
+  height: 100%;
+  top: 0%;
 }
 
 #mainList {
   animation: placesListOpening 0.2s ease-out;
   height: 100%;
+  overflow: hidden;
   width: var(--contentWidth);
-  padding-top: calc(var(--spacing5) + var(--spacing2));
+  padding-top: 0px;
   position: absolute;
-  top: 0px;
-  left: -100%;
+  left: 0px;
 }
 #mainList.open {
-  left: 0%;
+  overflow: scroll;
+  padding-top: calc(var(--spacing4) + var(--spacing2) + var(--spacing1));
 }
 
 @media (min-width:961px) {
   #body {
     background-color: rgba(255, 255, 255, 0.5);
   }
-  #header {
-    flex-direction: row-reverse;
-  }
-  #logo {
-    left: calc(var(--spacing3) + var(--borderWidth2));
-    width: calc(100% - 5 * var(--size2));
-    padding: var(--spacing2) 0px;
-    text-align: left;
-  }
+  
   #closeList {
+    display: none;
+  }
+  #closeListHeader {
     display: none;
   }
   #search.open {

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import ReactMapGL, { Marker } from "react-map-gl"
 import context, { ContextProps } from "../context/context"
 import { placeTypeColor } from "../lib/dictionary"
+import { scrollToElementInList } from "../lib/domHandling"
 
 const Map:React.FunctionComponent = () => {
     const contextData: ContextProps = useContext(context)
@@ -35,33 +36,11 @@ const Map:React.FunctionComponent = () => {
         })
     ), [])
 
-    const scrollToElementInList = (id: number, previousId?: number) => {
-        console.log('________________________')
-        const list = document.getElementById('mainList') as HTMLDivElement
-        (list.lastChild as HTMLDivElement).classList.add('temporaryMargin')
-        const elementToShow = document.getElementById('placeElement' + id) as HTMLDivElement
-
-        let heightToCompensate = 0
-        const openedElementHeight = list.clientWidth - 48
-        const closedElementHeight = 96
-
-        if (previousId && previousId !== id) {
-            const previousElement = document.getElementById('placeElement' + previousId) as HTMLDivElement
-            const newElementIsBelowPrevious = previousElement.compareDocumentPosition(elementToShow) === 4
-            if (newElementIsBelowPrevious) heightToCompensate = openedElementHeight - closedElementHeight
-        }
-
-        const verticalPositionToAccess = (elementToShow.offsetTop - ((window.innerHeight - openedElementHeight) / 2)) - heightToCompensate
-        
-        list.scrollTo({top: verticalPositionToAccess, behavior: 'smooth'})
-        ;(list.lastChild as HTMLDivElement).classList.remove('temporaryMargin')
-    }
-
     const handleMarkerClick = (id: number) => {
         const previousId = contextData.selected
         contextData.setSelected(id)
-        contextData.toggleDisplay(true)
-        scrollToElementInList(id, previousId)
+        if (!contextData.displayBody) contextData.toggleDisplay(true)
+        scrollToElementInList(contextData.desktopDisplay, id, previousId)
     }
 
     return (

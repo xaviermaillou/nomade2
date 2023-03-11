@@ -44,7 +44,7 @@ const Search:React.FunctionComponent = () => {
         <div ref={ref} id="search" className={selected ? "container fullHeight horizontal open" : "container fullHeight horizontal"}>
             <img onClick={() => setSelected(!selected)} alt="search" src="/img/search.png" className="fullHeight clickable" />
             {(selected && searchCopy.length > 0) &&
-                <div onClick={handleErasing} className="closingCross halfHeight horizontal inlineContainer">
+                <div onClick={handleErasing} className="closingCross halfHeight horizontal inlineContainer clickable">
                     <img className="fullHeight" alt="" src="/img/close.png" />
                 </div>
             }
