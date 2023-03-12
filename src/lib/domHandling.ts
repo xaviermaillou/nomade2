@@ -6,7 +6,7 @@ export const scrollToElementInList = (desktopDisplay: boolean, id: number, previ
     let heightToCompensate = 0
     const openedElementHeight = list.clientWidth - 48
     const closedElementHeight = 96
-    const closingElementHeight = desktopDisplay ? 0 : 108
+    const closingElementHeight = desktopDisplay ? 0 : 12
 
     if (previousId && previousId !== id && desktopDisplay) {
         const previousElement = document.getElementById('placeElement' + previousId) as HTMLDivElement
@@ -14,7 +14,7 @@ export const scrollToElementInList = (desktopDisplay: boolean, id: number, previ
         if (newElementIsBelowPrevious) heightToCompensate = openedElementHeight - closedElementHeight
     }
 
-    const verticalPositionToAccess = (elementToShow.offsetTop - ((window.innerHeight - openedElementHeight) / 2)) - heightToCompensate + closingElementHeight
+    const verticalPositionToAccess = (elementToShow.offsetTop - ((window.innerHeight - openedElementHeight) / 2)) - heightToCompensate - closingElementHeight
     
     list.scrollTo({top: verticalPositionToAccess, behavior: 'smooth'})
     ;(list.lastChild as HTMLDivElement).classList.remove('temporaryMargin')

@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react"
+import { scrollToElementInList } from "../lib/domHandling"
 import { fetchPlaceImg, fetchPlacesList } from "../request"
 import context, { ContextProps, ImgProps, PlaceProps, Position } from "./context"
 
@@ -12,12 +13,16 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     
     const [displayBody, setDisplayBody] = useState<boolean>(true)
     const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
-    const toggleDisplay = (arg?: boolean) => {
-        if (displayBody) setDisplayLogo(true)
+
+    const toggleDisplay = (arg?: boolean, newId?: number, previousId?: number) => {
+        if (displayBody) {
+            setDisplayLogo(true)
+            ;(document.getElementById('mainList') as HTMLDivElement).scrollTop = 0
+        } else if (newId) scrollToElementInList(desktopDisplay, newId, previousId)
         setDisplayBody(arg || !displayBody)
         setDisplayPlacesList(arg || !displayPlacesList)
-        ;(document.getElementById('mainList') as HTMLDivElement).scrollTop = 0
     }
+
     const [mapLoaded, setMapLoaded] = useState<boolean>(false)
 
     const [userPosition, setUserPosition] = useState<Position>({

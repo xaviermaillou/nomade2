@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlaceElement from './PlaceElement';
-import context, { ContextProps } from "../context/context"
+import context, { ContextProps, PlaceProps } from "../context/context"
 
 interface PlacesListProps {
     
@@ -31,9 +31,21 @@ const PlacesList: React.FunctionComponent<PlacesListProps> = (props) => {
                     "fullHeight reverse"}
                 />
             </div>
+            {(!contextData.displayBody && !contextData.desktopDisplay) &&
+                <PlaceElement
+                    data={
+                        contextData.placesList.find((place) => place.id === contextData.selected)
+                        || contextData.placesList[0] as PlaceProps
+                    }
+                    isCopy={true}
+                    isSelected={true}
+                    key="placeElementCopy"
+                />
+            }
             {
                 contextData.placesList?.map((place) => <PlaceElement
                     data={place}
+                    isCopy={false}
                     isSelected={contextData.selected === place.id}
                     key={place.id}
                 /> )

@@ -39,8 +39,7 @@ const Map:React.FunctionComponent = () => {
     const handleMarkerClick = (id: number) => {
         const previousId = contextData.selected
         contextData.setSelected(id)
-        if (!contextData.displayBody) contextData.toggleDisplay(true)
-        scrollToElementInList(contextData.desktopDisplay, id, previousId)
+        if (!contextData.displayBody) contextData.toggleDisplay(true, id, previousId)
     }
 
     return (

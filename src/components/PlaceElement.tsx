@@ -5,6 +5,7 @@ import context, { ContextProps } from "../context/context"
 
 interface PlaceElementProps {
     data: PlaceProps
+    isCopy: boolean
     isSelected?: boolean
 }
 
@@ -12,19 +13,15 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
     const contextData: ContextProps = useContext(context)
     
     const handleClick = async () => {
-        contextData.toggleDisplay(true)
-        contextData.setSelected(props.isSelected ? undefined : props.data.id)
+        if (!contextData.displayBody && props.isCopy) contextData.toggleDisplay(true, props.data.id)
+        else contextData.setSelected(props.isSelected ? undefined : props.data.id)
     }
 
     return (
         <div
-            id={'placeElement' + props.data.id}
-            className={props.isSelected ?
-                (contextData.displayBody ?
-                    `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth open`
-                    :
-                    `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth onTop`
-                )
+            id={props.isCopy ? 'placeElementCopy' : 'placeElement' + props.data.id}
+            className={props.isSelected && contextData.displayBody ?
+                `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth open`
                 :
                 `${placeTypeColor[props.data.type]} leftLine element container vertical fullWidth`
             }            

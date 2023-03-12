@@ -201,10 +201,6 @@ input:placeholder-shown {
   background-color: var(--colorWhite);
   border-top-right-radius: var(--borderRadius1);
   border-bottom-right-radius: var(--borderRadius1);
-  order: 2 !important;
-}
-#mainList .element.onTop {
-  order: 1 !important;
 }
 #mainList .element:last-child {
   margin-bottom: 96px;
