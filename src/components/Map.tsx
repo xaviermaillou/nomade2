@@ -40,6 +40,7 @@ const Map:React.FunctionComponent = () => {
         const previousId = contextData.selected
         contextData.setSelected(id)
         if (!contextData.displayBody) contextData.toggleDisplay(true, id, previousId)
+        else scrollToElementInList(contextData.desktopDisplay, id, previousId)
     }
 
     return (
