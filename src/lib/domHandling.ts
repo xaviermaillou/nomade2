@@ -1,3 +1,5 @@
+import React from "react"
+
 export const scrollToElementInList = (desktopDisplay: boolean, id: number, previousId?: number) => {
     const list = document.getElementById('mainList') as HTMLDivElement
     (list.lastChild as HTMLDivElement).classList.add('temporaryMargin')

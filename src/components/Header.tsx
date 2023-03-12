@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Search from "./Search";
 import context, { ContextProps } from "../context/context"
+import User from "./User";
 
 interface HeaderProps {
     
@@ -11,10 +12,8 @@ const Header: React.FunctionComponent<HeaderProps> = (props) => {
 
     return (
         <div id="header" className="horizontal">
-            <div id="user" className="container fullHeight clickable horizontal">
-                <img alt="user" src="/img/user.png" className="fullHeight" />
-            </div>
-            <div id="closeListHeader" className={(contextData.displayLogo || !contextData.displayBody) ? "container fullHeight hidden" : "container fullHeight"} onClick={() => contextData.toggleDisplay()}>
+            <User />
+            <div id="closeListHeader" className={(contextData.displayLogo || !contextData.displayBody) ? "container fullHeight clickable hidden" : "container fullHeight clickable"} onClick={() => contextData.toggleDisplay()}>
                 <img alt="close" src="/img/arrow.png" className="fullHeight" />
             </div>
             <div id="logo" className={(contextData.displayLogo || !contextData.displayBody) ? "container fullHeight" : "container fullHeight hidden"}>coffeeto.work</div>
