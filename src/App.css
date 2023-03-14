@@ -391,7 +391,7 @@ input:placeholder-shown {
   top: calc(var(--size1) / 2);
   left: calc((100vw / 2) - var(--size2) - var(--size1));
   display: block;
-  z-index: 1100;
+  z-index: 1000;
 }
 #closeListHeader.hidden {
   display: none;

@@ -18,7 +18,10 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
         if (displayBody) {
             setDisplayLogo(true)
             ;(document.getElementById('mainList') as HTMLDivElement).scrollTop = 0
-        } else if (newId) scrollToElementInList(desktopDisplay, newId, previousId)
+        } else if (newId) {
+            if (!selected) setSelected(newId)
+            scrollToElementInList(desktopDisplay, newId, previousId)
+        }
         setDisplayBody(arg || !displayBody)
         setDisplayPlacesList(arg || !displayPlacesList)
     }
