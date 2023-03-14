@@ -387,8 +387,9 @@ input:placeholder-shown {
 }
 
 #closeListHeader {
-  transform: translateX(-3px);
-  justify-content: center;
+  position: absolute;
+  top: calc(var(--size1) / 2);
+  left: calc((100vw / 2) - var(--size2) - var(--size1));
   display: block;
   z-index: 1100;
 }
