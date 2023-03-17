@@ -19,6 +19,13 @@ const User: React.FunctionComponent = () => {
     return (
         <div ref={ref} id="user" className={selected ? "modal container fullHeight horizontal open" : "modal container fullHeight horizontal"}>
             <img onClick={() => setSelected(!selected)} alt="user" src="/img/user.png" className="fullHeight clickable" />
+            {!contextData.user && <div id="userDrawer" className="fullHeight fullWidth horizontal">
+                <img onClick={() => contextData.setModal(1)} alt="sign up with mail" className="fullHeight clickable" src="/img/mail.png" />
+            </div>}
+            {contextData.user && <div id="userDrawer" className="fullHeight fullWidth horizontal">
+                <div className="subtitle">{contextData.user.email}</div>
+                <img onClick={() => contextData.signOut()} alt="sign out" className="fullHeight clickable" src="/img/logout.png" />
+            </div>}
         </div>
     )
 }

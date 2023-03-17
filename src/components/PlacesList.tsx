@@ -9,9 +9,18 @@ interface PlacesListProps {
 const PlacesList: React.FunctionComponent<PlacesListProps> = (props) => {
     const contextData: ContextProps = useContext(context)
 
+    const [logoHidingHandled, setLogoHidingHandled] = useState<boolean>(false)
+
     const handleScroll = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => { 
         const container = e.target as HTMLDivElement
-        contextData.setDisplayLogo(container.scrollTop < 50)
+        if (logoHidingHandled && container.scrollTop < 50) {
+            contextData.setDisplayLogo(true)
+            setLogoHidingHandled(false)
+        }
+        if (!logoHidingHandled && container.scrollTop > 50) {
+            contextData.setDisplayLogo(false)
+            setLogoHidingHandled(true)
+        }
     }
 
     return (

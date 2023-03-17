@@ -1,4 +1,6 @@
+import { User } from "firebase/auth"
 import React from "react"
+import { AuthResponseProps } from "./ContextProvider"
 
 export interface Position {
     latitude: number,
@@ -44,6 +46,12 @@ export interface ContextProps {
     desktopDisplay: boolean,
     displayLogo: boolean,
     setDisplayLogo: (arg: boolean) => void,
+    signUpWithMailAndPassword: (email: string, password: string) => Promise<AuthResponseProps>,
+    signInWithMailAndPassword: (email: string, password: string) => Promise<AuthResponseProps>,
+    signOut: (arg: void) => void,
+    user: User,
+    modal: number,
+    setModal: (arg: number | null) => void,
 }
 
 const context: React.Context<ContextProps> = React.createContext({} as ContextProps)

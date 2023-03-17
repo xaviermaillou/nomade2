@@ -3,18 +3,90 @@ import { scrollToElementInList } from "../lib/domHandling"
 import { fetchPlaceImg, fetchPlacesList } from "../request"
 import context, { ContextProps, ImgProps, PlaceProps, Position } from "./context"
 
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, Auth, User } from "firebase/auth";
+import { getFirestore, doc, setDoc, DocumentReference, DocumentData, Firestore } from "firebase/firestore";
+import app from "../firebase";
+import { AuthErrorMessages } from "../lib/dictionary";
+
+export enum AuthErrorMessageProps {
+    "auth/invalid-email",
+    "auth/user-not-found",
+    "auth/weak-password",
+}
+export interface AuthResponseProps {
+    success: boolean
+    errorMessage?: string
+}
+interface ErrorProps {
+    code: AuthErrorMessageProps
+}
+
 interface ContextProviderProps {
     children: ReactElement
 }
 
+
 const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) => {
+    const auth: Auth = getAuth(app)
+    const db: Firestore = getFirestore(app)
+
+    const [user, setUser] = useState<User | null>(null)
+
+    useEffect(() => {
+        setUser(auth.currentUser)
+    }, [auth.currentUser])
+
+    const signUpWithMailAndPassword = async (email: string, password: string): Promise<AuthResponseProps> => {
+        try {
+            const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password)
+            const userDocRef: DocumentReference<DocumentData> = doc(db, "users", userCredential.user.uid)
+            await setDoc (userDocRef, {
+                email: userCredential.user.email,
+                uid: userCredential.user.uid
+            })
+            return {
+                success: true,
+            }
+        } catch (error) {
+            console.error(error)
+            return {
+                success: false,
+                errorMessage: AuthErrorMessages[(error as ErrorProps).code]
+            }
+        }
+    }
+    const signInWithMailAndPassword = async (email: string, password: string): Promise<AuthResponseProps> => {
+        try {
+            const userCredential: UserCredential = await signInWithEmailAndPassword(auth, email, password)
+            return {
+                success: true,
+            }
+        } catch (error) {
+            console.error(error)
+            return {
+                success: false,
+                errorMessage: AuthErrorMessages[(error as ErrorProps).code]
+            }
+        }
+    }
+
+    const signOut = async () => {
+        try {
+            await auth.signOut()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const [modal, setModal] = useState<number | null>(null)
+
     const [placesList, setPlacesList] = useState<PlaceProps[]>([])
     const [selected, setSelected] = useState<number | undefined>(undefined)
     
     const [displayBody, setDisplayBody] = useState<boolean>(true)
     const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
 
-    const toggleDisplay = (arg?: boolean, newId?: number, previousId?: number) => {
+    const toggleDisplay = (arg?: boolean, newId?: number, previousId?: number): void => {
         if (displayBody) {
             setDisplayLogo(true)
             ;(document.getElementById('mainList') as HTMLDivElement).scrollTop = 0
@@ -105,6 +177,12 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             desktopDisplay,
             displayLogo,
             setDisplayLogo,
+            signUpWithMailAndPassword,
+            signInWithMailAndPassword,
+            signOut,
+            user,
+            modal,
+            setModal,
         } as ContextProps}>
             {props.children}
         </context.Provider>
