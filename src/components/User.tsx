@@ -23,8 +23,8 @@ const User: React.FunctionComponent = () => {
                 <img onClick={() => contextData.setModal(1)} alt="sign up with mail" className="fullHeight clickable" src="/img/mail.png" />
             </div>}
             {contextData.user && <div id="userDrawer" className="fullHeight fullWidth horizontal">
-                <div className="subtitle">{contextData.user.email}</div>
-                <img onClick={() => contextData.signOut()} alt="sign out" className="fullHeight clickable" src="/img/logout.png" />
+                <div id="userName" className="fullWidth subtitle">{contextData.userName}</div>
+                <img onClick={() => contextData.setModal(2)} alt="sign out" className="fullHeight clickable" src="/img/logout.png" />
             </div>}
         </div>
     )

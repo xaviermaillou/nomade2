@@ -50,6 +50,7 @@ export interface ContextProps {
     signInWithMailAndPassword: (email: string, password: string) => Promise<AuthResponseProps>,
     signOut: (arg: void) => void,
     user: User,
+    userName: string,
     modal: number,
     setModal: (arg: number | null) => void,
 }

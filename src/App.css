@@ -276,6 +276,14 @@ input::placeholder {
   text-overflow: ellipsis;
 }
 
+.button {
+  height: var(--size3);
+  font-size: var(--font3);
+  border-radius: calc(var(--size3) / 2);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+  padding: calc(var(--spacing2) / 2) calc(var(--spacing3) / 2);
+}
+
 
 
 #app {
@@ -290,8 +298,23 @@ input::placeholder {
   justify-content: center;
   z-index: 2000;
 }
-#modal>div {
+#modal div, #modal input {
+  margin: var(--spacing1) 0px;
+}
+#modal input {
+  border-bottom: solid var(--borderWidth1) var(--colorBlack);
+}
+#modal .vertical {
   justify-content: center;
+}
+#modal .horizontal {
+  justify-content: space-around;
+}
+#loginErrorMessage {
+  height: var(--size2);
+  color: var(--colorRed);
+  font-weight: 900;
+  text-align: center;
 }
 
 #mapContainer {
@@ -373,6 +396,11 @@ input::placeholder {
 #userDrawer {
   overflow-x: hidden;
   margin-left: var(--spacing2);
+}
+#userName {
+  text-align: center;
+  margin-right: var(--spacing2);
+  font-weight: 900;
 }
 #search {
   flex-direction: row-reverse;

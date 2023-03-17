@@ -31,9 +31,11 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     const db: Firestore = getFirestore(app)
 
     const [user, setUser] = useState<User | null>(null)
+    const [userName, setUserName] = useState<string | undefined>()
 
     useEffect(() => {
         setUser(auth.currentUser)
+        setUserName(auth.currentUser?.email?.split('@')[0])
     }, [auth.currentUser])
 
     const signUpWithMailAndPassword = async (email: string, password: string): Promise<AuthResponseProps> => {
@@ -181,6 +183,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             signInWithMailAndPassword,
             signOut,
             user,
+            userName,
             modal,
             setModal,
         } as ContextProps}>
