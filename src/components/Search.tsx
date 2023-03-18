@@ -28,7 +28,8 @@ const Search:React.FunctionComponent = () => {
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (ref.current && !ref.current.contains(e.target as Node) && searchCopy.length === 0) setSelected(false)
+            if ((ref.current && !ref.current.contains(e.target as Node) && searchCopy.length === 0)
+                || ((e.target as HTMLElement).parentElement?.id === 'user')) setSelected(false)
         }
         document.addEventListener('click', handleClickOutside)
         return () => document.removeEventListener('click', handleClickOutside)
