@@ -80,10 +80,12 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
 
     const getRequest = async (url: string): Promise<AxiosResponse> => {
         const idToken = await user?.getIdToken(true)
+        let headers
+        if (idToken) headers = {
+            'Authorization': `Bearer ${idToken}`
+        }
         return await axios.get(url, {
-            headers: {
-                'Authorization': `Bearer ${idToken}`
-            }
+            headers
         })
     }
     
