@@ -1,14 +1,11 @@
-import { User } from "firebase/auth"
 import React from "react"
-import { AuthResponseProps } from "./ContextProvider"
 
-export interface Position {
-    latitude: number,
-    longitude: number,
-    fetched: boolean
+export interface ImgProps {
+  id: number
+  path: string
 }
-  
-  export interface PlaceProps {
+
+export interface PlaceProps {
     id: number
     name: string
     latitude: number
@@ -23,9 +20,10 @@ export interface Position {
     img: ImgProps[]
 }
 
-export interface ImgProps {
-  id: number
-  path: string
+export interface Position {
+    latitude: number,
+    longitude: number,
+    fetched: boolean
 }
 
 export interface ContextProps {
@@ -46,11 +44,6 @@ export interface ContextProps {
     desktopDisplay: boolean,
     displayLogo: boolean,
     setDisplayLogo: (arg: boolean) => void,
-    signUpWithMailAndPassword: (email: string, password: string) => Promise<AuthResponseProps>,
-    signInWithMailAndPassword: (email: string, password: string) => Promise<AuthResponseProps>,
-    signOut: (arg: void) => void,
-    user: User,
-    userName: string,
     modal: number,
     setModal: (arg: number | null) => void,
 }

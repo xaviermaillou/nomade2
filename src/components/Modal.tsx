@@ -1,8 +1,10 @@
 import { useContext, useState } from "react"
 import context, { ContextProps } from "../context/context"
+import requests, { RequestsProps } from "../context/requests"
 
 const Modal = () => {
     const contextData: ContextProps = useContext(context)
+    const requestsData: RequestsProps = useContext(requests)
 
     const [userMail, setUserMail] = useState<string>('')
     const [userPassword, setUserPassword] = useState<string>('')
@@ -10,15 +12,15 @@ const Modal = () => {
 
     const handleLogin = async (newUser: boolean) => {
         const result = newUser ?
-            await contextData.signUpWithMailAndPassword(userMail, userPassword)
+            await requestsData.signUpWithMailAndPassword(userMail, userPassword)
             :
-            await contextData.signInWithMailAndPassword(userMail, userPassword)
+            await requestsData.signInWithMailAndPassword(userMail, userPassword)
         if (result.success) contextData.setModal(null)
         else setErrorMessage(result.errorMessage)
     }
 
     const handleLogout = async (arg: boolean) => {
-        if (arg) contextData.signOut()
+        if (arg) requestsData.signOut()
         contextData.setModal(null)
     }
 

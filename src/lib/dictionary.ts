@@ -1,5 +1,3 @@
-import { AuthErrorMessageProps } from "../context/ContextProvider";
-
 export enum wifiScore {
     'No',
     'Very bad',

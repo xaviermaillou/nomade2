@@ -1,25 +1,7 @@
-import React, { ReactElement, useEffect, useState } from "react"
+import React, { ReactElement, useContext, useEffect, useState } from "react"
 import { scrollToElementInList } from "../lib/domHandling"
-import { fetchPlaceImg, fetchPlacesList } from "../request"
 import context, { ContextProps, ImgProps, PlaceProps, Position } from "./context"
-
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, Auth, User } from "firebase/auth";
-import { getFirestore, doc, setDoc, DocumentReference, DocumentData, Firestore } from "firebase/firestore";
-import app from "../firebase";
-import { AuthErrorMessages } from "../lib/dictionary";
-
-export enum AuthErrorMessageProps {
-    "auth/invalid-email",
-    "auth/user-not-found",
-    "auth/weak-password",
-}
-export interface AuthResponseProps {
-    success: boolean
-    errorMessage?: string
-}
-interface ErrorProps {
-    code: AuthErrorMessageProps
-}
+import requests, { RequestsProps } from "./requests"
 
 interface ContextProviderProps {
     children: ReactElement
@@ -27,62 +9,10 @@ interface ContextProviderProps {
 
 
 const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) => {
-    const auth: Auth = getAuth(app)
-    const db: Firestore = getFirestore(app)
-
-    const [user, setUser] = useState<User | null>(null)
-    const [userName, setUserName] = useState<string | undefined>()
-
-    useEffect(() => {
-        setUser(auth.currentUser)
-        setUserName(auth.currentUser?.email?.split('@')[0])
-    }, [auth.currentUser])
-
-    const signUpWithMailAndPassword = async (email: string, password: string): Promise<AuthResponseProps> => {
-        try {
-            const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password)
-            const userDocRef: DocumentReference<DocumentData> = doc(db, "users", userCredential.user.uid)
-            await setDoc (userDocRef, {
-                email: userCredential.user.email,
-                uid: userCredential.user.uid
-            })
-            return {
-                success: true,
-            }
-        } catch (error) {
-            console.error(error)
-            return {
-                success: false,
-                errorMessage: AuthErrorMessages[(error as ErrorProps).code]
-            }
-        }
-    }
-    const signInWithMailAndPassword = async (email: string, password: string): Promise<AuthResponseProps> => {
-        try {
-            const userCredential: UserCredential = await signInWithEmailAndPassword(auth, email, password)
-            return {
-                success: true,
-            }
-        } catch (error) {
-            console.error(error)
-            return {
-                success: false,
-                errorMessage: AuthErrorMessages[(error as ErrorProps).code]
-            }
-        }
-    }
-
-    const signOut = async () => {
-        try {
-            await auth.signOut()
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const requestData: RequestsProps = useContext(requests)
 
     const [modal, setModal] = useState<number | null>(null)
 
-    const [placesList, setPlacesList] = useState<PlaceProps[]>([])
     const [selected, setSelected] = useState<number | undefined>(undefined)
     
     const [displayBody, setDisplayBody] = useState<boolean>(true)
@@ -110,8 +40,6 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const [searchString, setSearchString] = useState<string>('')
 
-    const [firstSearchExecuted, setFirstSearchExecuted] = useState<boolean>(false)
-
     const [desktopDisplay, setDesktopDisplay] = useState<boolean>(window.innerWidth >= 961)
     const handleWindowResize = (): void => {
         const isDesktopDisplay = window.innerWidth >= 961
@@ -127,9 +55,13 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const [displayLogo, setDisplayLogo] = useState<boolean>(true)
 
+    const [placesList, setPlacesList] = useState<PlaceProps[]>([])
+
+    const [firstSearchExecuted, setFirstSearchExecuted] = useState<boolean>(false)
+
     const fetchPlacesAndSetState = async () => {
         if (userPosition.fetched && mapLoaded) {
-            const result: PlaceProps[] = await fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
+            const result: PlaceProps[] = await requestData.fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
             setTimeout(() => {
                 setPlacesList(result)
                 setFirstSearchExecuted(true)
@@ -140,7 +72,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const fetchPlaceImgAndSetState = async () => {
         if (selected) {
-            const result: ImgProps[] = await fetchPlaceImg(selected)
+            const result: ImgProps[] = await requestData.fetchPlaceImg(selected)
             setTimeout(() => {
                 setPlacesList((places) => {
                     return places.map((place) => {
@@ -179,11 +111,6 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             desktopDisplay,
             displayLogo,
             setDisplayLogo,
-            signUpWithMailAndPassword,
-            signInWithMailAndPassword,
-            signOut,
-            user,
-            userName,
             modal,
             setModal,
         } as ContextProps}>
