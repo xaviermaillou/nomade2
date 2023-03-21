@@ -10,6 +10,10 @@ const User: React.FunctionComponent = () => {
 
     const ref = useRef<HTMLDivElement>(null)
 
+    const handleClick = (enabled: boolean) => {
+        if (enabled) setSelected(!selected)
+    }
+
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (ref.current && !ref.current.contains(e.target as Node)) setSelected(false)
@@ -19,8 +23,8 @@ const User: React.FunctionComponent = () => {
     }, [ref])
 
     return (
-        <div ref={ref} id="user" className={selected ? "modal container fullHeight horizontal open" : "modal container fullHeight horizontal"}>
-            <img onClick={() => setSelected(!selected)} alt="user" src="/img/user.png" className="fullHeight clickable" />
+        <div onClick={() => handleClick(!selected)} ref={ref} id="user" className={selected ? "modal container fullHeight horizontal open" : "modal container fullHeight horizontal clickable"}>
+            <img onClick={() => handleClick(selected)} alt="user" src="/img/user.png" className="fullHeight clickable" />
             {!requestsData.user && <div id="userDrawer" className="fullHeight fullWidth horizontal">
                 <img onClick={() => contextData.setModal(1)} alt="sign up with mail" className="fullHeight clickable" src="/img/mail.png" />
             </div>}

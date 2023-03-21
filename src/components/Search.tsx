@@ -37,13 +37,17 @@ const Search:React.FunctionComponent = () => {
 
     const inputRef = useRef<HTMLInputElement>(null)
 
+    const handleClick = (enabled: boolean) => {
+        if (enabled) setSelected(!selected)
+    }
+
     useEffect(() => {
         if (selected && inputRef.current) setTimeout(() => inputRef.current?.focus(), 200)
     }, [selected])
 
     return (
-        <div ref={ref} id="search" className={selected ? "modal container fullHeight horizontal open" : "modal container fullHeight horizontal"}>
-            <img onClick={() => setSelected(!selected)} alt="search" src="/img/search.png" className="fullHeight clickable" />
+        <div onClick={() => handleClick(!selected)} ref={ref} id="search" className={selected ? "modal container fullHeight horizontal open" : "modal container fullHeight horizontal clickable"}>
+            <img onClick={() => handleClick(selected)} alt="search" src="/img/search.png" className="fullHeight clickable" />
             {(selected && searchCopy.length > 0) &&
                 <div onClick={handleErasing} className="closingCross halfHeight horizontal inlineContainer clickable">
                     <img className="fullHeight" alt="" src="/img/close.png" />
