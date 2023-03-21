@@ -31,15 +31,15 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                 onClick={() => handleClick()}
             >
                 <div className='previewInfo vertical fullHeight'>
-                    <div className='title'>{props.data.name}</div>
-                    <div className='subtitle'>{placeTypeName[props.data.type]}</div>
+                    <div className='horizontal halfHeight'><div className='title'>{props.data.name}</div></div>
+                    <div className='horizontal halfHeight'><div className='subtitle'>{placeTypeName[props.data.type]}</div></div>
                 </div>
                 <div className="previewData vertical fullHeight">
                     {(contextData.userPosition.fetched && props.data.distance) &&
-                        <div className="halfHeight">{Math.round(props.data.distance).toLocaleString()} m</div>
+                        <div className="horizontal halfHeight"><div>{Math.round(props.data.distance).toLocaleString()} m</div></div>
                     }
                     <div className="halfHeight horizontal">
-                        <img className='fullHeight icon' alt='wifi' src='/img/wifi.png' />&nbsp;&nbsp;
+                        <img className='icon' alt='wifi' src='/img/wifi.png' />&nbsp;&nbsp;
                         <div>{wifiScore[props.data.wifi] || '?'}</div>
                     </div>
                 </div>
@@ -48,21 +48,21 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                 <div className="feedback vertical fullWidth">
                     <div className="horizontal fullWidth halfHeight">
                         <div className='horizontal fullHeight'>
-                            <img className={props.data.solo ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='solo' src='/img/solo.png' />&nbsp;
+                            <img className={props.data.solo ? 'icon' : 'icon lowOpacity'} alt='solo' src='/img/solo.png' />&nbsp;
                             <div>{props.data.solo ? 'To work alone' : 'X'}</div>
                         </div>
                         <div className='horizontal fullHeight'>
-                            <img className={props.data.quiet ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='quiet' src='/img/mute.png' />&nbsp;&nbsp;
+                            <img className={props.data.quiet ? 'icon' : 'icon lowOpacity'} alt='quiet' src='/img/mute.png' />&nbsp;&nbsp;
                             <div>{props.data.quiet ? 'Quiet' : 'X'}</div>
                         </div>
                     </div>
                     <div className="horizontal fullWidth halfHeight">
                         <div className='horizontal fullHeight'>
-                            <img className={props.data.gathering ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='group' src='/img/group.png' />&nbsp;&nbsp;
+                            <img className={props.data.gathering ? 'fullHeight icon' : 'icon lowOpacity'} alt='group' src='/img/group.png' />&nbsp;&nbsp;
                             <div>{props.data.gathering ? 'To work in group' : 'X'}</div>
                         </div>
                         <div className='horizontal fullHeight'>
-                            <img className={props.data.outlet ? 'fullHeight icon' : 'fullHeight icon lowOpacity'} alt='outlet' src='/img/outlet.png' />&nbsp;
+                            <img className={props.data.outlet ? 'fullHeight icon' : 'icon lowOpacity'} alt='outlet' src='/img/outlet.png' />&nbsp;
                             <div>{props.data.outlet ? 'Outlets available' : 'X'}</div>
                         </div>
                     </div>

@@ -19,26 +19,26 @@
   --colorGreen: rgba(0, 120, 0, 1);
 
   /* Spacings */
-  --spacing1: 12px;
-  --spacing2: 24px;
-  --spacing3: 48px;
-  --spacing4: 72px;
-  --spacing5: 96px;
-  --spacing6: 192px;
-  --spacing7: 288px;
-  --spacing8: 384px;
-  --spacing9: 768px;
+  --spacing1: 8px;
+  --spacing2: 16px;
+  --spacing3: 24px;
+  --spacing4: 32px;
+  --spacing5: 48px;
+  --spacing6: 72px;
+  --spacing7: 96px;
+  --spacing8: 120px;
+  --spacing9: 144px;
 
   /* Font sizes */
-  --size1: 12px;
-  --size2: 24px;
-  --size3: 48px;
-  --size4: 72px;
-  --size5: 96px;
-  --size6: 192px;
-  --size7: 288px;
-  --size8: 384px;
-  --size9: 768px;
+  --size1: 8px;
+  --size2: 16px;
+  --size3: 24px;
+  --size4: 32px;
+  --size5: 48px;
+  --size6: 72px;
+  --size7: 96px;
+  --size8: 120px;
+  --size9: 144px;
 
   /* Font sizes */
   --font1: 14px;
@@ -48,8 +48,8 @@
 
   /* Border width */
   --borderWidth1: 2px;
-  --borderWidth2: 5px;
-  --borderWidth3: 20px;
+  --borderWidth2: 4px;
+  --borderWidth3: 8px;
 
   /* Border radius */
   --borderRadius1: 6px;
@@ -76,7 +76,7 @@
   margin: 0;
   color: var(--colorBlack);
   font-family: 'Roboto';
-  font-size: var(--font2);
+  font-size: var(--font1);
 }
 
 ::-webkit-scrollbar {
@@ -117,10 +117,6 @@
 }
 .inlineContainer {
   padding: 0px var(--spacing2);
-}
-
-.icon {
-  padding: 5px 0px;
 }
 
 .vertical {
@@ -170,7 +166,7 @@
 input {
   background: none;
   border: none;
-  font-size: var(--font3);
+  font-size: var(--font2);
 }
 input:focus {
   outline: none;
@@ -193,7 +189,7 @@ input::placeholder {
   overflow-y: scroll;
 }
 #mainList .element {
-  height: var(--size5);
+  height: var(--size7);
   overflow: hidden;
   margin-bottom: var(--spacing2);
   flex-grow: 0;
@@ -211,7 +207,9 @@ input::placeholder {
 
 #mainList .element .preview {
   /* The height is calculated based on closed element height */
-  height: calc(var(--size5) - (2 * var(--spacing2)));
+  height: calc(var(--size7) - (2 * var(--spacing2)));
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 .previewInfo {
   width: 66%;
@@ -224,19 +222,18 @@ input::placeholder {
   align-items: flex-end;
   justify-content: flex-end;
 }
-.previewData div {
-  font-size: var(--font1);
-}
 
 #mainList .element .feedback {
-  height: var(--size3);
+  height: var(--size5);
   margin: var(--spacing2) 0px;
   justify-content: flex-start;
 }
 
-#mainList .element .feedback div {
-  font-size: var(--font1);
+#mainList .element .icon {
+  padding: 5px 0px;
+  height: var(--size3);
 }
+
 #mainList .element .feedback div div {
   white-space: nowrap;
   overflow-x: hidden;
@@ -245,7 +242,7 @@ input::placeholder {
 }
 
 #mainList .element .carrousel {
-  height: calc(var(--contentWidth) - (var(--size3) + (8 * var(--size2))));
+  height: calc(var(--contentWidth) - var(--size7) - var(--size5) - (4 * var(--spacing2)));
   border-radius: var(--borderRadius1);
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.05);
@@ -264,7 +261,7 @@ input::placeholder {
 .title {
   max-width: 100%;
   font-weight: 900;
-  font-size: var(--font4);
+  font-size: var(--font3);
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -277,11 +274,11 @@ input::placeholder {
 }
 
 .button {
-  height: var(--size3);
-  font-size: var(--font3);
-  border-radius: calc(var(--size3) / 2);
+  height: var(--size4);
+  font-size: var(--font2);
+  border-radius: calc(var(--size4) / 2);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
-  padding: calc(var(--spacing2) / 2) calc(var(--spacing3) / 2);
+  padding: calc(var(--spacing1) / 2) calc(var(--spacing3) / 2);
 }
 
 
@@ -368,7 +365,7 @@ input::placeholder {
 }
 
 #header {
-  height: var(--size4);
+  height: var(--size5);
   width: var(--contentWidth);
   margin: var(--spacing2) 0px;
   padding: 0px var(--spacing2);
@@ -379,14 +376,14 @@ input::placeholder {
 }
 
 #header .modal {
-  width: var(--size4);
+  width: var(--size5);
   border-radius: var(--size3);
   background-color: var(--colorWhite);
   opacity: 0.66;
   z-index: 1100;
 }
 #header .modal.open {
-  width: calc(var(--contentWidth) - (2 * var(--spacing2) + var(--size4)));
+  width: calc(var(--contentWidth) - (4 * var(--spacing2) + var(--size4)));
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
   opacity: 1;
 }
@@ -416,10 +413,11 @@ input::placeholder {
   left: 0px;
   width: 100%;
   text-align: center;
-  font-family: 'Courier New', Courier, monospace;;
+  /* font-family: 'Courier New', Courier, monospace; */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: var(--font4);
   font-weight: 900;
-  line-height: 100%;
+  line-height: 50%;
   color: var(--colorBlack);
   opacity: 0.5;
   z-index: 800;
@@ -440,7 +438,7 @@ input::placeholder {
 }
 #closeList {
   height: var(--size2);
-  margin-bottom: var(--spacing1);
+  margin-bottom: var(--spacing2);
   background: none;
   z-index: 1100;
   justify-content: center;
@@ -457,11 +455,11 @@ input::placeholder {
 }
 
 #body {
-  height: calc(var(--size4) + var(--size4) + var(--size1));
+  height: calc(var(--size6) + var(--size6) + var(--spacing2));
   width: var(--contentWidth);
   overflow: hidden;
   position: absolute;
-  top: calc(100% - (var(--size4) + var(--size4) + var(--size1)));
+  top: calc(100% - (var(--size6) + var(--size6) + var(--spacing2)));
   left: 0px;
   z-index: 900;
 }
@@ -481,7 +479,7 @@ input::placeholder {
 }
 #mainList.open {
   overflow: scroll;
-  padding-top: calc(var(--spacing4) + var(--spacing2) + var(--spacing1));
+  padding-top: calc(var(--spacing8));
 }
 
 @media (min-width:961px) {

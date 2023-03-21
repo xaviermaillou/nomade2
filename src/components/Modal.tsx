@@ -31,8 +31,8 @@ const Modal = () => {
                     <input onChange={(e) => setUserMail(e.target.value)} value={userMail} placeholder="Email address" type="text" className="fullWidth" />
                     <input onChange={(e) => setUserPassword(e.target.value)} value={userPassword} placeholder="Password" type="password" className="fullWidth" />
                     <div className="horizontal fullWidth">
-                        <p onClick={() => handleLogin(false)} className="button clickable">Sign in</p>
-                        <p onClick={() => handleLogin(true)} className="button clickable">Sign up</p>
+                        <div onClick={() => handleLogin(false)} className="button clickable">Sign in</div>
+                        <div onClick={() => handleLogin(true)} className="button clickable">Sign up</div>
                     </div>
                     <div id="loginErrorMessage" className="fullWidth">{errorMessage}</div>
                 </div>
