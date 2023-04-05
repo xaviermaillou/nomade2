@@ -5,19 +5,28 @@ export interface ImgProps {
   path: string
 }
 
+export interface DetailProps {
+    id: number
+    gluten_free_food: boolean,
+    vegetal_milk: boolean,
+    vegan_food: boolean,
+    decaf: boolean
+}
+
 export interface PlaceProps {
     id: number
     name: string
     latitude: number
     longitude: number
+    address: string
     distance?: number
     type: number
-    quiet: boolean
-    solo: boolean
-    gathering: boolean
+    quiet: number
     wifi: number
-    outlet: boolean
+    outlet: number
+    seats: number
     img: ImgProps[]
+    details: DetailProps[]
 }
 
 export interface Position {

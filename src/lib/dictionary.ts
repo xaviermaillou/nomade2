@@ -1,10 +1,31 @@
 export enum wifiScore {
     'No',
-    'Very bad',
-    'Poor',
-    'Correct',
-    'Good',
-    'Excellent'
+    'Very bad', // > 0
+    'Poor', // > 1
+    'Correct', // > 5
+    'Good', // > 25
+    'Excellent' // > 50
+}
+
+export enum outletsScore {
+    'No',
+    'Few',
+    'Some',
+    'Many'
+}
+
+export enum quietScore {
+    'Chaotic',
+    'Busy',
+    'Calm',
+    'Serene'
+}
+
+export enum seatsScore {
+    'No',
+    'Small',
+    'Medium',
+    'Vast'
 }
 
 export enum placeTypeName {

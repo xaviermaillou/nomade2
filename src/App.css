@@ -220,7 +220,6 @@ input::placeholder {
   width: 33%;
   overflow-x: hidden;
   align-items: flex-end;
-  justify-content: flex-end;
 }
 
 #mainList .element .feedback {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { placeTypeColor, placeTypeName, wifiScore } from '../lib/dictionary';
+import { outletsScore, placeTypeColor, placeTypeName, quietScore, seatsScore, wifiScore } from '../lib/dictionary';
 import { PlaceProps } from '../context/context';
 import context, { ContextProps } from "../context/context"
 
@@ -38,32 +38,29 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                     {(contextData.userPosition.fetched && props.data.distance) &&
                         <div className="horizontal halfHeight"><div>{Math.round(props.data.distance).toLocaleString()} m</div></div>
                     }
-                    <div className="halfHeight horizontal">
-                        <img className='icon' alt='wifi' src='/img/wifi.png' />&nbsp;&nbsp;
-                        <div>{wifiScore[props.data.wifi] || '?'}</div>
-                    </div>
+                    <div className='horizontal halfHeight'><div className='subtitle'>{props.data.address}</div></div>
                 </div>
             </div>
             <div className="details vertical fullWidth">
                 <div className="feedback vertical fullWidth">
                     <div className="horizontal fullWidth halfHeight">
-                        <div className='horizontal fullHeight'>
-                            <img className={props.data.solo ? 'icon' : 'icon lowOpacity'} alt='solo' src='/img/solo.png' />&nbsp;
-                            <div>{props.data.solo ? 'To work alone' : 'X'}</div>
+                        <div className="horizontal fullHeight">
+                            <img className='icon' alt='wifi' src='/img/wifi.png' />&nbsp;&nbsp;
+                            <div>{wifiScore[props.data.wifi] || '?'}</div>
                         </div>
                         <div className='horizontal fullHeight'>
-                            <img className={props.data.quiet ? 'icon' : 'icon lowOpacity'} alt='quiet' src='/img/mute.png' />&nbsp;&nbsp;
-                            <div>{props.data.quiet ? 'Quiet' : 'X'}</div>
+                            <img className={props.data.outlet ? 'fullHeight icon' : 'icon lowOpacity'} alt='outlet' src='/img/outlet.png' />&nbsp;
+                            <div>{outletsScore[props.data.outlet] || '?'}</div>
                         </div>
                     </div>
                     <div className="horizontal fullWidth halfHeight">
                         <div className='horizontal fullHeight'>
-                            <img className={props.data.gathering ? 'fullHeight icon' : 'icon lowOpacity'} alt='group' src='/img/group.png' />&nbsp;&nbsp;
-                            <div>{props.data.gathering ? 'To work in group' : 'X'}</div>
+                            <img className={props.data.quiet ? 'icon' : 'icon lowOpacity'} alt='quiet' src='/img/mute.png' />&nbsp;&nbsp;
+                            <div>{quietScore[props.data.quiet] || '?'}</div>
                         </div>
                         <div className='horizontal fullHeight'>
-                            <img className={props.data.outlet ? 'fullHeight icon' : 'icon lowOpacity'} alt='outlet' src='/img/outlet.png' />&nbsp;
-                            <div>{props.data.outlet ? 'Outlets available' : 'X'}</div>
+                            <img className={props.data.seats ? 'fullHeight icon' : 'icon lowOpacity'} alt='group' src='/img/group.png' />&nbsp;&nbsp;
+                            <div>{seatsScore[props.data.seats] || '?'}</div>
                         </div>
                     </div>
                 </div>

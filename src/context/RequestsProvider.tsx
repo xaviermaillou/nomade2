@@ -6,7 +6,7 @@ import app from "../firebase"
 import { AuthErrorMessages } from "../lib/dictionary"
 import requests from "./requests"
 import conf from '../conf.json'
-import { ImgProps, PlaceProps } from "./context"
+import { DetailProps, ImgProps, PlaceProps } from "./context"
 
 const API_URL = conf.API_URL
 const IMG_URL = conf.IMG_URL
@@ -104,6 +104,11 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
         })
     }
 
+    const fetchPlaceDetails = async (id: number): Promise<DetailProps[]> => {
+        const result = await getRequest(`${API_URL}/place/${id}/details`)
+        return result.data
+    }
+
     return (
         <requests.Provider value={{
             signUpWithMailAndPassword,
@@ -113,6 +118,7 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
             userName,
             fetchPlacesList,
             fetchPlaceImg,
+            fetchPlaceDetails,
         }}>
             {props.children}
         </requests.Provider>
