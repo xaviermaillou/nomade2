@@ -212,14 +212,17 @@ input::placeholder {
   flex-grow: 0;
 }
 .previewInfo {
-  width: 66%;
+  width: 50%;
   justify-content: center;
   align-items: flex-start;
 }
 .previewData {
-  width: 33%;
+  width: 50%;
   overflow-x: hidden;
   align-items: flex-end;
+}
+.previewData div {
+  max-width: 100%;
 }
 
 #mainList .element .feedback {

@@ -59,6 +59,14 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const [firstSearchExecuted, setFirstSearchExecuted] = useState<boolean>(false)
 
+    const [alreadyFetchedPlacesDetails, setAlreadyFetchedPlacesDetails] = useState<number[]>([])
+
+    const addElementToAlreadyFetchedPlacesDetails = (id: number) => {
+        setAlreadyFetchedPlacesDetails((array: number[]) => {
+            return [ ...array, id ]
+        })
+    }
+
     const fetchPlacesAndSetState = async () => {
         if (userPosition.fetched && mapLoaded) {
             const result: PlaceProps[] = await requestData.fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
@@ -93,7 +101,8 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     }, [userPosition.fetched, mapLoaded, searchString])
 
     useEffect(() => {
-        fetchPlaceDetailsAndSetState()
+        if (selected && !alreadyFetchedPlacesDetails.includes(selected)) fetchPlaceDetailsAndSetState()
+        if (selected) addElementToAlreadyFetchedPlacesDetails(selected)
     }, [selected])
 
     return (
