@@ -1,5 +1,9 @@
 import React from "react"
 
+export interface PreferencesProps {
+    liked?: boolean
+}
+
 export interface ImgProps {
   id: number
   path: string
@@ -26,7 +30,8 @@ export interface PlaceProps {
     outlet: number
     seats: number
     img: ImgProps[]
-    details: DetailProps[]
+    details: DetailProps
+    preferences: PreferencesProps
 }
 
 export interface Position {

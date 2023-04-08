@@ -1,6 +1,6 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react"
 import { scrollToElementInList } from "../lib/domHandling"
-import context, { ContextProps, DetailProps, ImgProps, PlaceProps, Position } from "./context"
+import context, { ContextProps, DetailProps, ImgProps, PlaceProps, Position, PreferencesProps } from "./context"
 import requests, { RequestsProps } from "./requests"
 
 interface ContextProviderProps {
@@ -81,13 +81,15 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     const fetchPlaceDetailsAndSetState = async () => {
         if (selected) {
             const imgResult: ImgProps[] = await requestData.fetchPlaceImg(selected)
-            const detailsResult: DetailProps[] = await requestData.fetchPlaceDetails(selected)
+            const detailsResult: DetailProps = await requestData.fetchPlaceDetails(selected)
+            const preferences: PreferencesProps = await requestData.fetchPlacePreferences(selected)
             setTimeout(() => {
                 setPlacesList((places) => {
                     return places.map((place) => {
                         if (place.id === selected) {
                             place.img = imgResult
                             place.details = detailsResult
+                            place.preferences = preferences
                         }
                         return place
                     })

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { outletsScore, placeTypeColor, placeTypeName, quietScore, seatsScore, wifiScore } from '../lib/dictionary';
 import { PlaceProps } from '../context/context';
 import context, { ContextProps } from "../context/context"
+import Carrousel from './Carrousel';
 
 interface PlaceElementProps {
     data: PlaceProps
@@ -64,11 +65,12 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="carrousel horizontal fullWidth">
-                    {props.data.img?.map((img) => (
-                        <div key={img.id} className="img fullWidth fullHeight" style={{backgroundImage: `url('${img.path}')`}}></div>
-                    ))}
-                </div>
+                <Carrousel
+                    placeId={props.data.id}
+                    img={props.data.img}
+                    details={props.data.details}
+                    preferences={props.data.preferences}
+                />
             </div>
             </div>
     )

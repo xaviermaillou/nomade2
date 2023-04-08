@@ -6,10 +6,17 @@ import app from "../firebase"
 import { AuthErrorMessages } from "../lib/dictionary"
 import requests from "./requests"
 import conf from '../conf.json'
-import { DetailProps, ImgProps, PlaceProps } from "./context"
+import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./context"
 
 const API_URL = conf.API_URL
 const IMG_URL = conf.IMG_URL
+
+enum Methods {
+    GET = "GET",
+    POST = "POST",
+    PATCH = "PATCH",
+    DELETE = "DELETE"
+}
 
 export enum AuthErrorMessageProps {
     "auth/invalid-email",
@@ -33,10 +40,12 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
     const db: Firestore = getFirestore(app)
     const [user, setUser] = useState<User | null>(null)
     const [userName, setUserName] = useState<string | undefined>()
+
     auth.onAuthStateChanged((user: User | null) => {
         setUser(user)
         setUserName(user?.email?.split('@')[0])
     })
+
     const signUpWithMailAndPassword = async (email: string, password: string): Promise<AuthResponseProps> => {
         try {
             const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password)
@@ -78,24 +87,45 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
         }
     }
 
-    const getRequest = async (url: string): Promise<AxiosResponse> => {
+    const request = async (method: Methods, url: string, body?: any): Promise<AxiosResponse> => {
         const idToken = await user?.getIdToken(true)
         let headers
         if (idToken) headers = {
             'Authorization': `Bearer ${idToken}`
         }
-        return await axios.get(url, {
-            headers
-        })
+        switch (method) {
+            case Methods.GET:
+                return await axios.get(url, {
+                    headers
+                })
+            case Methods.POST:
+                return await axios.post(url, {
+                    headers,
+                    body
+                })
+            case Methods.PATCH:
+                return await axios.patch(url, {
+                    headers,
+                    body
+                })
+            case Methods.DELETE:
+                return await axios.delete(url, {
+                    headers
+                })
+            default:
+                return await axios.get(url, {
+                    headers
+                })
+        }
     }
     
     const fetchPlacesList = async (latitude: number, longitude: number, distance: number, search: string): Promise<PlaceProps[]> => {
-        const result = await getRequest(`${API_URL}/places/${latitude || 0}/${longitude || 0}/${distance || 0}/${search || ''}`)
+        const result = await request(Methods.GET, `${API_URL}/places/${latitude || 0}/${longitude || 0}/${distance || 0}/${search || ''}`)
         return result.data
     }
     
     const fetchPlaceImg = async (id: number): Promise<ImgProps[]> => {
-        const result = await getRequest(`${API_URL}/place/${id}/img`)
+        const result = await request(Methods.GET, `${API_URL}/place/${id}/img`)
         return result.data.map((img: ImgProps) => {
             return {
                 id: img.id,
@@ -104,8 +134,25 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
         })
     }
 
-    const fetchPlaceDetails = async (id: number): Promise<DetailProps[]> => {
-        const result = await getRequest(`${API_URL}/place/${id}/details`)
+    const fetchPlaceDetails = async (id: number): Promise<DetailProps> => {
+        const result = await request(Methods.GET, `${API_URL}/place/${id}/details`)
+        return result.data
+    }
+
+    const fetchPlacePreferences = async (id: number): Promise<PreferencesProps> => {
+        const result = await request(Methods.GET, `${API_URL}/place/${id}/preferences/${user?.uid}`)
+        return result.data
+    }
+    const postPlacePreferences = async (id: number, body: { liked: boolean }) => {
+        const result = await request(Methods.POST, `${API_URL}/place/${id}/preferences/${user?.uid}`, body)
+        return result.data
+    }
+    const patchPlacePreferences = async (id: number, body: { liked: boolean }) => {
+        const result = await request(Methods.PATCH, `${API_URL}/place/${id}/preferences/${user?.uid}`, body)
+        return result.data
+    }
+    const deletePlacePreferences = async (id: number) => {
+        const result = await request(Methods.DELETE, `${API_URL}/place/${id}/preferences/${user?.uid}`)
         return result.data
     }
 
@@ -119,6 +166,10 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
             fetchPlacesList,
             fetchPlaceImg,
             fetchPlaceDetails,
+            fetchPlacePreferences,
+            postPlacePreferences,
+            patchPlacePreferences,
+            deletePlacePreferences,
         }}>
             {props.children}
         </requests.Provider>

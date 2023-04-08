@@ -163,6 +163,13 @@
   max-width: var(--size6);
 }
 
+.option {
+  opacity: 0.66;
+}
+.option.selected {
+  opacity: 1;
+}
+
 input {
   background: none;
   border: none;
@@ -248,12 +255,66 @@ input::placeholder {
   border-radius: var(--borderRadius1);
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.05);
+  position: relative;
 }
 #mainList .element .carrousel .img {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   filter: grayscale(75%);
+}
+#mainList .element .carrousel .edit {
+  height: var(--size4);
+  width: var(--size4);
+  border-radius: var(--borderRadius1);
+  position: absolute;
+  bottom: var(--spacing2);
+  right: var(--spacing2);
+  background-color: rgba(255, 255, 255);
+  opacity: 0.5;
+}
+#mainList .element .carrousel .edit.open {
+  height: 100%;
+  width: 100%;
+  bottom: 0px;
+  right: 0px;
+  opacity: 0.95;
+}
+#mainList .element .carrousel .edit .editContent {
+  opacity: 0;
+  transition-delay: 0s;
+}
+#mainList .element .carrousel .edit.open .editContent {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+#mainList .element .carrousel .edit .editContent .likeImg {
+  height: var(--size6);
+  position: absolute;
+  top: var(--spacing5);
+  left: 0px;
+  opacity: 0.05;
+}
+#mainList .element .carrousel .edit .editContent .likeImg.hidden {
+  opacity: 0;
+}
+#mainList .element .carrousel .edit .editContent .likeImg img {
+  transition: 0s;
+}
+#mainList .element .carrousel .edit .editContent .likeImg.reverted img {
+  transform: scaleY(-1);
+}
+#mainList .element .carrousel .edit .editButton {
+  height: var(--size4);
+  border-radius: var(--borderRadius1);
+  padding: var(--spacing1);
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+#mainList .element .carrousel .edit.open .editButton {
+  bottom: var(--spacing2);
+  right: var(--spacing2);
 }
 
 #mainList .element.open {
