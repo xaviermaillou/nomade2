@@ -39,13 +39,23 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
 
     return (
         <div className={open ? "edit open" : "edit"}>
-            <div className="container editContent">
-                <div className="horizontal">
-                    <div onClick={() => handleClickLiked(true, likedPlace === true)} className={likedPlace === true ? "option clickable selected" : "option clickable"}>I liked this place</div>
-                    <div onClick={() => handleClickLiked(false, likedPlace === false)} className={likedPlace === false ? "option clickable selected" : "option clickable"}>I did not like this place</div>
+            <div className="editBar horizontal">
+                <div
+                    onClick={() => handleClickLiked(true, likedPlace === true)}
+                    className="clickable fullHeight"
+                >
+                    <img className="fullHeight" alt="like" src={likedPlace === true ? "img/good filled.png" : "/img/good.png"} />
                 </div>
-                <div className={likedPlace === undefined ? "likeImg fullWidth vertical hidden" : (likedPlace ? "likeImg fullWidth vertical" : "likeImg fullWidth vertical reverted")}>
-                    <img className="fullHeight" alt={likedPlace ? "like" : "dislike"} src="/img/good.png" />
+                <div
+                    onClick={() => handleClickLiked(false, likedPlace === false)}
+                    className="clickable fullHeight"
+                >
+                    <img className="fullHeight" alt="dislike" src={likedPlace === false ? "img/bad filled.png" : "/img/bad.png"} />
+                </div>
+                <div
+                    className="clickable fullHeight"
+                >
+                    <img className="fullHeight" alt="dislike" src="/img/alert.png" />
                 </div>
             </div>
             <div onClick={handleClickEdit} className="clickable editButton">
