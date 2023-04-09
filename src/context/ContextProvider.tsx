@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect, useState } from "react"
+import React, { ReactElement, useCallback, useContext, useEffect, useState } from "react"
 import { scrollToElementInList } from "../lib/domHandling"
 import context, { ContextProps, DetailProps, ImgProps, PlaceProps, Position, PreferencesProps } from "./context"
 import requests, { RequestsProps } from "./requests"
@@ -18,18 +18,6 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     const [displayBody, setDisplayBody] = useState<boolean>(true)
     const [displayPlacesList, setDisplayPlacesList] = useState<boolean>(true)
 
-    const toggleDisplay = (arg?: boolean, newId?: number, previousId?: number): void => {
-        if (displayBody) {
-            setDisplayLogo(true)
-            ;(document.getElementById('mainList') as HTMLDivElement).scrollTop = 0
-        } else if (newId) {
-            if (!selected) setSelected(newId)
-            scrollToElementInList(desktopDisplay, newId, previousId)
-        }
-        setDisplayBody(arg || !displayBody)
-        setDisplayPlacesList(arg || !displayPlacesList)
-    }
-
     const [mapLoaded, setMapLoaded] = useState<boolean>(false)
 
     const [userPosition, setUserPosition] = useState<Position>({
@@ -41,17 +29,31 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     const [searchString, setSearchString] = useState<string>('')
 
     const [desktopDisplay, setDesktopDisplay] = useState<boolean>(window.innerWidth >= 961)
-    const handleWindowResize = (): void => {
+
+    const toggleDisplay = useCallback((arg?: boolean, newId?: number, previousId?: number) => {
+        if (displayBody) {
+            setDisplayLogo(true)
+            ;(document.getElementById('mainList') as HTMLDivElement).scrollTop = 0
+        } else if (newId) {
+            if (!selected) setSelected(newId)
+            scrollToElementInList(desktopDisplay, newId, previousId)
+        }
+        setDisplayBody(arg || !displayBody)
+        setDisplayPlacesList(arg || !displayPlacesList)
+    }, [desktopDisplay, displayBody, displayPlacesList, selected])
+
+    const handleWindowResize = useCallback(() => {
         const isDesktopDisplay = window.innerWidth >= 961
         setDesktopDisplay(isDesktopDisplay)
         if (isDesktopDisplay) toggleDisplay(true)
-    }
+    }, [toggleDisplay])
+
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize)
         return () => {
             window.removeEventListener('resize', handleWindowResize)
         }
-    }, [])
+    }, [handleWindowResize])
 
     const [displayLogo, setDisplayLogo] = useState<boolean>(true)
 
@@ -67,7 +69,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
         })
     }
 
-    const fetchPlacesAndSetState = async () => {
+    const fetchPlacesAndSetState = useCallback(async () => {
         if (userPosition.fetched && mapLoaded) {
             const result: PlaceProps[] = await requestData.fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
             setTimeout(() => {
@@ -76,9 +78,9 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
                 setSelected(undefined)
             }, firstSearchExecuted ? 0 : 1000)
         }
-    }
+    }, [firstSearchExecuted, mapLoaded, requestData, searchString, userPosition])
 
-    const fetchPlaceDetailsAndSetState = async () => {
+    const fetchPlaceDetailsAndSetState = useCallback(async () => {
         if (selected) {
             const imgResult: ImgProps[] = await requestData.fetchPlaceImg(selected)
             const detailsResult: DetailProps = await requestData.fetchPlaceDetails(selected)
@@ -96,16 +98,18 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
                 })
             }, 200)
         }
-    }
+    }, [requestData, selected])
     
     useEffect(() => {
         fetchPlacesAndSetState()
-    }, [userPosition.fetched, mapLoaded, searchString])
+    }, [userPosition.fetched, mapLoaded, searchString, fetchPlacesAndSetState])
 
     useEffect(() => {
-        if (selected && !alreadyFetchedPlacesDetails.includes(selected)) fetchPlaceDetailsAndSetState()
-        if (selected) addElementToAlreadyFetchedPlacesDetails(selected)
-    }, [selected])
+        if (selected && !alreadyFetchedPlacesDetails.includes(selected)) {
+            fetchPlaceDetailsAndSetState()
+            addElementToAlreadyFetchedPlacesDetails(selected)
+        }
+    }, [selected, alreadyFetchedPlacesDetails, fetchPlaceDetailsAndSetState])
 
     return (
         <context.Provider value={{

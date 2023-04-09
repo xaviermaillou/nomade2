@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios"
 import { Auth, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, User, UserCredential } from "firebase/auth"
 import { doc, DocumentData, DocumentReference, Firestore, getFirestore, setDoc } from "firebase/firestore"
-import { ReactElement, useContext, useEffect, useState } from "react"
+import { ReactElement, useState } from "react"
 import app from "../firebase"
 import { AuthErrorMessages } from "../lib/dictionary"
 import requests from "./requests"
