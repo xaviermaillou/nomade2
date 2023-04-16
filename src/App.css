@@ -288,7 +288,7 @@ textarea {
 }
 #mainList .element .carrousel .edit .editBar {
   height: var(--size4);
-  width: 75%;
+  width: 72%;
   padding: var(--spacing1) var(--spacing3);
   margin-bottom: var(--spacing2);
 }
