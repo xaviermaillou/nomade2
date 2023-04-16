@@ -269,7 +269,7 @@ textarea {
   bottom: var(--spacing2);
   right: var(--spacing2);
   background-color: rgba(255, 255, 255);
-  opacity: 0.5;
+  opacity: 0.75;
 }
 #mainList .element .carrousel .edit.open {
   height: 100%;
