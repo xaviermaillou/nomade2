@@ -43,7 +43,7 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                 </div>
             </div>
             <div className="details vertical fullWidth">
-                <div className="feedback vertical fullWidth">
+                <div className="features vertical fullWidth">
                     <div className="horizontal fullWidth halfHeight">
                         <div className="horizontal fullHeight">
                             <img className='icon' alt='wifi' src='/img/wifi.png' />&nbsp;&nbsp;

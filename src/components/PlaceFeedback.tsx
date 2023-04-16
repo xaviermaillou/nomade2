@@ -11,11 +11,21 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
     const requestData: RequestsProps = useContext(requests)
 
     const [open, setOpen] = useState<boolean>(false)
+    const [dataAlreadyExists, setDataAlreadyExists] = useState<boolean>(false)
     const [likedPlace, setLikedPlace] = useState<boolean | undefined>(undefined)
+    const [placeNotes, setPlaceNotes] = useState<string | undefined>(undefined)
+    const [placeNotesCopy, setPlaceNotesCopy] = useState<string>("")
+    const [notesTimer, setNotesTimer] = useState<any>(undefined)
 
     useEffect(() => {
         setLikedPlace(props.preferences?.liked)
+        setPlaceNotes(props.preferences?.notes || undefined)
+        setPlaceNotesCopy(props.preferences?.notes || "")
     }, [props.preferences])
+
+    useEffect(() => {
+        setDataAlreadyExists(likedPlace !== undefined || placeNotes !== undefined)
+    }, [likedPlace, placeNotes])
 
     const handleClickEdit = () => {
         if (open) {
@@ -24,17 +34,40 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
         setOpen(!open)
     }
 
+    const runNotesTimer = (notes: string) => {
+        setNotesTimer(setTimeout(() => {
+            const finalNotes = notes.length > 0 ? notes : undefined
+            if (!dataAlreadyExists && finalNotes !== undefined) {
+                requestData.postPlacePreferences(props.placeId, { liked: undefined, notes: finalNotes })
+            } else {
+                if (finalNotes !== undefined || likedPlace !== undefined) {
+                    requestData.patchPlacePreferences(props.placeId, { liked: likedPlace, notes: finalNotes })
+                } else {
+                    requestData.deletePlacePreferences(props.placeId)
+                }
+            }
+            setPlaceNotes(finalNotes)
+        }, 1000))
+    }
+
+    const handleChangeNotes = (notes: string) => {
+        setPlaceNotesCopy(notes)
+        clearTimeout(notesTimer)
+        runNotesTimer(notes)
+    }
+
     const handleClickLiked = (liked: boolean, activated: boolean) => {
-        if (likedPlace === undefined) {
-            requestData.postPlacePreferences(props.placeId, { liked })
-            setLikedPlace(liked)
-        } else if (!activated) {
-            requestData.patchPlacePreferences(props.placeId, { liked })
-            setLikedPlace(liked)
+        const finalLiked = activated ? undefined : liked
+        if (!dataAlreadyExists) {
+            requestData.postPlacePreferences(props.placeId, { liked: finalLiked, notes: undefined })
         } else {
-            requestData.deletePlacePreferences(props.placeId)
-            setLikedPlace(undefined)
+            if (!activated || placeNotes) {
+                requestData.patchPlacePreferences(props.placeId, { liked: finalLiked, notes: placeNotes })
+            } else {
+                requestData.deletePlacePreferences(props.placeId)
+            }
         }
+        setLikedPlace(finalLiked)
     }
 
     return (
@@ -57,6 +90,14 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
                 >
                     <img className="fullHeight" alt="dislike" src="/img/alert.png" />
                 </div>
+            </div>
+            <div className="notes fullWidth fullHeight">
+                <textarea
+                    placeholder="Keep some notes here..."
+                    className="fullWidth fullHeight"
+                    value={placeNotesCopy}
+                    onChange={(e) => handleChangeNotes(e.target.value)}
+                />
             </div>
             <div onClick={handleClickEdit} className="clickable editButton">
                 <img alt="edit place" src={open ? "img/close.png" : "/img/edit.png"} className="fullHeight" />

@@ -2,6 +2,7 @@ import React from "react"
 
 export interface PreferencesProps {
     liked?: boolean
+    notes?: string
 }
 
 export interface ImgProps {

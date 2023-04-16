@@ -13,8 +13,8 @@ export interface RequestsProps {
     fetchPlaceImg: (id: number) => Promise<ImgProps[]>
     fetchPlaceDetails: (id: number) => Promise<DetailProps>,
     fetchPlacePreferences: (id: number) => Promise<PreferencesProps>,
-    postPlacePreferences: (id: number, body: { liked: boolean }) => any,
-    patchPlacePreferences: (id: number, body: { liked: boolean }) => any,
+    postPlacePreferences: (id: number, body: { liked?: boolean, notes?: string }) => any,
+    patchPlacePreferences: (id: number, body: { liked?: boolean, notes?: string }) => any,
     deletePlacePreferences: (id: number) => any,
 }
 

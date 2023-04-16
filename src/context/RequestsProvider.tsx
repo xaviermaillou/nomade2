@@ -143,11 +143,11 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
         const result = await request(Methods.GET, `${API_URL}/place/${id}/preferences/${user?.uid}`)
         return result.data
     }
-    const postPlacePreferences = async (id: number, body: { liked: boolean }) => {
+    const postPlacePreferences = async (id: number, body: { liked?: boolean, notes?: string }) => {
         const result = await request(Methods.POST, `${API_URL}/place/${id}/preferences/${user?.uid}`, body)
         return result.data
     }
-    const patchPlacePreferences = async (id: number, body: { liked: boolean }) => {
+    const patchPlacePreferences = async (id: number, body: { liked?: boolean, notes?: string }) => {
         const result = await request(Methods.PATCH, `${API_URL}/place/${id}/preferences/${user?.uid}`, body)
         return result.data
     }
