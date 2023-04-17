@@ -30,6 +30,8 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
 
     const [desktopDisplay, setDesktopDisplay] = useState<boolean>(window.innerWidth >= 961)
 
+    const [warningPlaceId, setWarningPlaceId] = useState<number | undefined>(undefined)
+
     const toggleDisplay = useCallback((arg?: boolean, newId?: number, previousId?: number) => {
         if (displayBody) {
             setDisplayLogo(true)
@@ -132,6 +134,8 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             setDisplayLogo,
             modal,
             setModal,
+            warningPlaceId,
+            setWarningPlaceId
         } as ContextProps}>
             {props.children}
         </context.Provider>

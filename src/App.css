@@ -166,7 +166,14 @@
 input, textarea {
   background: none;
   border: none;
+}
+input {
   font-size: var(--font2);
+}
+textarea {
+  font-size: var(--font1);
+  padding: 0px var(--spacing1);
+  border-left: solid var(--borderWidth1) var(--colorBlack);
 }
 input:focus, textarea:focus {
   outline: none;
@@ -281,11 +288,6 @@ textarea {
 #mainList .element .carrousel .edit .notes {
   padding: var(--spacing2) var(--spacing3) var(--spacing1) var(--spacing3);
 }
-#mainList .element .carrousel .edit .notes textarea {
-  border-left: solid var(--borderWidth1) var(--colorBlack);
-  padding: 0px var(--spacing1);
-  font-size: var(--font1);
-}
 #mainList .element .carrousel .edit .editBar {
   height: var(--size4);
   width: 72%;
@@ -341,7 +343,7 @@ textarea {
   font-size: var(--font2);
   border-radius: calc(var(--size4) / 2);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
-  padding: calc(var(--spacing1) / 2) calc(var(--spacing3) / 2);
+  padding: calc(var(--spacing1) / 2) calc(var(--spacing4) / 2);
 }
 
 
@@ -357,6 +359,12 @@ textarea {
   background-color: rgba(255, 255, 255, 0.95);
   justify-content: center;
   z-index: 2000;
+}
+#modal .close {
+  height: var(--size2);
+  position: absolute;
+  top: var(--spacing2);
+  right: var(--spacing2);
 }
 #modal div, #modal input {
   margin: var(--spacing1) 0px;

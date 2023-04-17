@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { outletsScore, placeTypeColor, placeTypeName, quietScore, seatsScore, wifiScore } from '../lib/dictionary';
 import { PlaceProps } from '../context/context';
 import context, { ContextProps } from "../context/context"
-import Carrousel from './Carrousel';
+import PlaceCarrousel from './PlaceCarrousel';
 
 interface PlaceElementProps {
     data: PlaceProps
@@ -65,7 +65,7 @@ const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
                         </div>
                     </div>
                 </div>
-                <Carrousel
+                <PlaceCarrousel
                     placeId={props.data.id}
                     img={props.data.img}
                     details={props.data.details}

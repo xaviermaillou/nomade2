@@ -16,6 +16,7 @@ export interface RequestsProps {
     postPlacePreferences: (id: number, body: { liked?: boolean, notes?: string }) => any,
     patchPlacePreferences: (id: number, body: { liked?: boolean, notes?: string }) => any,
     deletePlacePreferences: (id: number) => any,
+    postPlaceWarning: (id: number, body: { message?: string }) => any,
 }
 
 const requests: React.Context<RequestsProps> = React.createContext({} as RequestsProps)

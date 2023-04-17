@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { PreferencesProps } from "../context/context"
+import context, { ContextProps, PreferencesProps } from "../context/context"
 import requests, { RequestsProps } from "../context/requests"
 
 interface PlaceFeedbackProps {
@@ -9,6 +9,7 @@ interface PlaceFeedbackProps {
 
 const PlaceFeedback = (props: PlaceFeedbackProps) => {
     const requestData: RequestsProps = useContext(requests)
+    const contextData: ContextProps = useContext(context)
 
     const [open, setOpen] = useState<boolean>(false)
     const [dataAlreadyExists, setDataAlreadyExists] = useState<boolean>(false)
@@ -70,6 +71,11 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
         setLikedPlace(finalLiked)
     }
 
+    const handleClickAlert = () => {
+        contextData.setWarningPlaceId(props.placeId)
+        contextData.setModal(3)
+    }
+
     return (
         <div className={open ? "edit open" : "edit"}>
             <div className="editBar horizontal">
@@ -86,6 +92,7 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
                     <img className="fullHeight" alt="dislike" src={likedPlace === false ? "img/bad filled.png" : "/img/bad.png"} />
                 </div>
                 <div
+                    onClick={handleClickAlert}
                     className="clickable fullHeight"
                 >
                     <img className="fullHeight" alt="dislike" src="/img/alert.png" />

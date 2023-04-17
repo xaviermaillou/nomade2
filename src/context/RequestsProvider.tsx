@@ -156,6 +156,11 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
         return result.data
     }
 
+    const postPlaceWarning = async (id: number, body: { message?: string }) => {
+        const result = await request(Methods.POST, `${API_URL}/place/${id}/warning/${user?.uid}`, body)
+        return result.data
+    }
+
     return (
         <requests.Provider value={{
             signUpWithMailAndPassword,
@@ -170,6 +175,7 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
             postPlacePreferences,
             patchPlacePreferences,
             deletePlacePreferences,
+            postPlaceWarning,
         }}>
             {props.children}
         </requests.Provider>

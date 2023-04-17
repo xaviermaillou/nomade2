@@ -3,14 +3,14 @@ import { DetailProps, ImgProps, PreferencesProps } from "../context/context"
 import requests, { RequestsProps } from "../context/requests"
 import PlaceFeedback from "./PlaceFeedback"
 
-interface CarrouselProps {
+interface PlaceCarrouselProps {
     placeId: number
     img: ImgProps[]
     details: DetailProps
     preferences: PreferencesProps
 }
 
-const Carrousel = (props: CarrouselProps) => {
+const PlaceCarrousel = (props: PlaceCarrouselProps) => {
     const requestsData: RequestsProps = useContext(requests)
 
     return (
@@ -23,4 +23,4 @@ const Carrousel = (props: CarrouselProps) => {
     )
 }
 
-export default Carrousel
+export default PlaceCarrousel

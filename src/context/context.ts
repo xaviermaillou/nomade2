@@ -61,6 +61,8 @@ export interface ContextProps {
     setDisplayLogo: (arg: boolean) => void,
     modal: number,
     setModal: (arg: number | null) => void,
+    warningPlaceId?: number,
+    setWarningPlaceId: (arg?: number) => void
 }
 
 const context: React.Context<ContextProps> = React.createContext({} as ContextProps)
