@@ -72,12 +72,14 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     }
 
     const fetchPlacesAndSetState = useCallback(async () => {
+        setPlacesList([])
         if (userPosition.fetched && mapLoaded) {
             const result: PlaceProps[] = await requestData.fetchPlacesList(userPosition.latitude, userPosition.longitude, 999999999999, searchString)
             setTimeout(() => {
                 setPlacesList(result)
                 setFirstSearchExecuted(true)
                 setSelected(undefined)
+                setAlreadyFetchedPlacesDetails([])
             }, firstSearchExecuted ? 0 : 1000)
         }
     }, [firstSearchExecuted, mapLoaded, requestData, searchString, userPosition])

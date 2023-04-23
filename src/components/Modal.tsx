@@ -15,12 +15,24 @@ const Modal = () => {
 
     const [alertMessage, setAlertMessage] = useState<string>("")
 
+    const isSuccessAndCloseModal = (timeout: number) => {
+        setLoading(false)
+        setSuccess(true)
+        setTimeout(() => {
+            contextData.setModal(null)
+            setSuccess(false)
+        }, timeout)
+    }
+
     const handleLogin = async (newUser: boolean) => {
+        setLoading(true)
         const result = newUser ?
             await requestsData.signUpWithMailAndPassword(userMail, userPassword)
             :
             await requestsData.signInWithMailAndPassword(userMail, userPassword)
-        if (result.success) contextData.setModal(null)
+        if (result.success) {
+            isSuccessAndCloseModal(2000)
+        }
         else setErrorMessage(result.errorMessage)
     }
 
@@ -35,12 +47,7 @@ const Modal = () => {
             setLoading(true)
             const response = await requestsData.postPlaceWarning(placeId, {message: alertMessage})
             if (response.placeId === placeId) {
-                setLoading(false)
-                setSuccess(true)
-                setTimeout(() => {
-                    contextData.setModal(null)
-                    setSuccess(false)
-                }, 3000)
+                isSuccessAndCloseModal(3000)
             } else {
                 setErrorMessage("Error while sending the alert, please try again")
             }
@@ -58,10 +65,19 @@ const Modal = () => {
                 <div className="container halfHeight fullWidth vertical">
                     <input onChange={(e) => setUserMail(e.target.value)} value={userMail} placeholder="Email address" type="text" className="fullWidth" />
                     <input onChange={(e) => setUserPassword(e.target.value)} value={userPassword} placeholder="Password" type="password" className="fullWidth" />
-                    <div className="horizontal fullWidth">
-                        <div onClick={() => handleLogin(false)} className="button clickable">Sign in</div>
-                        <div onClick={() => handleLogin(true)} className="button clickable">Sign up</div>
-                    </div>
+                    {(!success && !loading) ? 
+                        <div className="horizontal fullWidth">
+                            <div onClick={() => handleLogin(false)} className="button clickable">Sign in</div>
+                            <div onClick={() => handleLogin(true)} className="button clickable">Sign up</div>
+                        </div>
+                        :
+                        <div className="horizontal fullWidth">
+                            <div className="button">
+                                {success && <img className="fullHeight" src="/img/check.png" alt="success" />}
+                                {loading && <img className="fullHeight" src="/img/loading.gif" alt="loading" />}
+                            </div>
+                        </div>
+                    }
                     <div id="loginErrorMessage" className="fullWidth">{errorMessage}</div>
                 </div>
             }

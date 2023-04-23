@@ -31,10 +31,7 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
         setDataAlreadyExists(likedPlace !== undefined || placeNotes !== undefined)
     }, [likedPlace, placeNotes])
 
-    const handleClickEdit = () => {
-        if (open) {
-            console.log("Submit")
-        }
+    const toggleFeedback = () => {
         setOpen(!open)
     }
 
@@ -123,7 +120,7 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
                     {loading && <img className="fullHeight" src="/img/loading.gif" alt="loading" />}
                 </div>
             </div>
-            <div onClick={handleClickEdit} className="clickable editButton">
+            <div onClick={toggleFeedback} className="clickable editButton">
                 <img alt="edit place" src={open ? "img/close.png" : "/img/edit.png"} className="fullHeight" />
             </div>
         </div>
