@@ -34,7 +34,7 @@ const Modal = () => {
         if (placeId) {
             setLoading(true)
             const response = await requestsData.postPlaceWarning(placeId, {message: alertMessage})
-            if (response.place_id === placeId) {
+            if (response.placeId === placeId) {
                 setLoading(false)
                 setSuccess(true)
                 setTimeout(() => {

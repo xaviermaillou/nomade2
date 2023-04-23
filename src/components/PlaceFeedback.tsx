@@ -18,6 +18,9 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
     const [placeNotesCopy, setPlaceNotesCopy] = useState<string>("")
     const [notesTimer, setNotesTimer] = useState<any>(undefined)
 
+    const [loading, setLoading] = useState<boolean>(false)
+    const [success, setSuccess] = useState<boolean>(false)
+
     useEffect(() => {
         setLikedPlace(props.preferences?.liked)
         setPlaceNotes(props.preferences?.notes || undefined)
@@ -36,18 +39,28 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
     }
 
     const runNotesTimer = (notes: string) => {
-        setNotesTimer(setTimeout(() => {
+        setNotesTimer(setTimeout(async () => {
+            setSuccess(false)
+            setLoading(true)
             const finalNotes = notes.length > 0 ? notes : undefined
+            let response
             if (!dataAlreadyExists && finalNotes !== undefined) {
-                requestData.postPlacePreferences(props.placeId, { liked: undefined, notes: finalNotes })
+                response = await requestData.postPlacePreferences(props.placeId, { liked: undefined, notes: finalNotes })
             } else {
                 if (finalNotes !== undefined || likedPlace !== undefined) {
-                    requestData.patchPlacePreferences(props.placeId, { liked: likedPlace, notes: finalNotes })
+                    response = await requestData.patchPlacePreferences(props.placeId, { liked: likedPlace, notes: finalNotes })
                 } else {
-                    requestData.deletePlacePreferences(props.placeId)
+                    response = await requestData.deletePlacePreferences(props.placeId)
                 }
             }
-            setPlaceNotes(finalNotes)
+            if (response.placeId === props.placeId) {
+                setPlaceNotes(finalNotes)
+                setLoading(false)
+                setSuccess(true)
+                setTimeout(() => {
+                    setSuccess(false)
+                }, 2000)
+            }
         }, 1000))
     }
 
@@ -105,6 +118,10 @@ const PlaceFeedback = (props: PlaceFeedbackProps) => {
                     value={placeNotesCopy}
                     onChange={(e) => handleChangeNotes(e.target.value)}
                 />
+                <div className="notesResult">
+                    {success && <img className="halfHeight" src="/img/check.png" alt="success" />}
+                    {loading && <img className="fullHeight" src="/img/loading.gif" alt="loading" />}
+                </div>
             </div>
             <div onClick={handleClickEdit} className="clickable editButton">
                 <img alt="edit place" src={open ? "img/close.png" : "/img/edit.png"} className="fullHeight" />

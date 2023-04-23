@@ -287,6 +287,16 @@ textarea {
 }
 #mainList .element .carrousel .edit .notes {
   padding: var(--spacing2) var(--spacing3) var(--spacing1) var(--spacing3);
+  position: relative;
+}
+#mainList .element .carrousel .edit .notes .notesResult {
+  position: absolute;
+  top: var(--spacing2);
+  right: var(--spacing3);
+  height: var(--size3);
+  width: var(--size3);
+  display: flex;
+  justify-content: center;
 }
 #mainList .element .carrousel .edit .editBar {
   height: var(--size4);
