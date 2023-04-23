@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import context, { ContextProps, PreferencesProps } from "../context/context"
+import context, { ContextProps } from "../context/context"
+import { PreferencesProps } from "../context/ContextProvider"
 import requests, { RequestsProps } from "../context/requests"
 
 interface PlaceFeedbackProps {

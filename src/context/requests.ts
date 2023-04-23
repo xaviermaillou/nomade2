@@ -1,6 +1,6 @@
 import { User } from "firebase/auth";
 import React from "react";
-import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./context";
+import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./ContextProvider";
 import { AuthResponseProps } from "./RequestsProvider";
 
 export interface RequestsProps {
@@ -9,6 +9,7 @@ export interface RequestsProps {
     signOut: (arg: void) => void,
     user: User | null,
     userName?: string,
+    postUser: (body: { email: string, uid: string, type?: string }) => any,
     fetchPlacesList: (latitude: number, longitude: number, distance: number, search: string) => Promise<PlaceProps[]>,
     fetchPlaceImg: (id: number) => Promise<ImgProps[]>
     fetchPlaceDetails: (id: number) => Promise<DetailProps>,

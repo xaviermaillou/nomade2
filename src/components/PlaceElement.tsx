@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { outletsScore, placeTypeColor, placeTypeName, quietScore, seatsScore, wifiScore } from '../lib/dictionary';
-import { PlaceProps } from '../context/context';
+import { PlaceProps } from '../context/ContextProvider';
 import context, { ContextProps } from "../context/context"
 import PlaceCarrousel from './PlaceCarrousel';
 

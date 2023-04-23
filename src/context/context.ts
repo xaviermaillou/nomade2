@@ -1,45 +1,5 @@
 import React from "react"
-
-export interface PreferencesProps {
-    liked?: boolean
-    notes?: string
-}
-
-export interface ImgProps {
-  id: number
-  path: string
-}
-
-export interface DetailProps {
-    id: number
-    gluten_free_food: boolean,
-    vegetal_milk: boolean,
-    vegan_food: boolean,
-    decaf: boolean
-}
-
-export interface PlaceProps {
-    id: number
-    name: string
-    latitude: number
-    longitude: number
-    address: string
-    distance?: number
-    type: number
-    quiet: number
-    wifi: number
-    outlet: number
-    seats: number
-    img: ImgProps[]
-    details: DetailProps
-    preferences: PreferencesProps
-}
-
-export interface Position {
-    latitude: number,
-    longitude: number,
-    fetched: boolean
-}
+import { AuthMethods, PlaceProps, Position } from "./ContextProvider"
 
 export interface ContextProps {
     placesList: PlaceProps[],
@@ -51,6 +11,8 @@ export interface ContextProps {
     setDisplayPlacesList: (arg: boolean) => void,
     toggleDisplay: (arg?: boolean, newId?: number, previousId?: number) => void,
     userPosition: Position,
+    authMethod: AuthMethods,
+    setAuthMethod: (arg: AuthMethods) => void,
     setUserPosition: (arg: Position) => void,
     mapLoaded: boolean,
     setMapLoaded: (arg: boolean) => void,

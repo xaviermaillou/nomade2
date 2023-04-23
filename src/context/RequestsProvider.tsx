@@ -4,9 +4,9 @@ import { doc, DocumentData, DocumentReference, Firestore, getFirestore, setDoc }
 import { ReactElement, useState } from "react"
 import app from "../firebase"
 import { AuthErrorMessages } from "../lib/dictionary"
-import requests from "./requests"
+import requests, { RequestsProps } from "./requests"
 import conf from '../conf.json'
-import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./context"
+import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./ContextProvider"
 
 const API_URL = conf.API_URL
 const IMG_URL = conf.IMG_URL
@@ -25,6 +25,7 @@ export enum AuthErrorMessageProps {
 }
 export interface AuthResponseProps {
     success: boolean
+    user?: User
     errorMessage?: string
 }
 interface ErrorProps {
@@ -49,13 +50,9 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
     const signUpWithMailAndPassword = async (email: string, password: string): Promise<AuthResponseProps> => {
         try {
             const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password)
-            const userDocRef: DocumentReference<DocumentData> = doc(db, "users", userCredential.user.uid)
-            await setDoc (userDocRef, {
-                email: userCredential.user.email,
-                uid: userCredential.user.uid
-            })
             return {
                 success: true,
+                user: userCredential.user
             }
         } catch (error) {
             console.error(error)
@@ -118,6 +115,11 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
                 })
         }
     }
+
+    const postUser = async (body: { email: string, uid: string, type?: string }) => {
+        const result = await request(Methods.POST, `${API_URL}/users`, body)
+        return result.data
+    }
     
     const fetchPlacesList = async (latitude: number, longitude: number, distance: number, search: string): Promise<PlaceProps[]> => {
         const result = await request(Methods.GET, `${API_URL}/places/${latitude || 0}/${longitude || 0}/${distance || 0}/${search || ''}`)
@@ -168,6 +170,7 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
             signOut,
             user,
             userName,
+            postUser,
             fetchPlacesList,
             fetchPlaceImg,
             fetchPlaceDetails,
@@ -176,7 +179,7 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
             patchPlacePreferences,
             deletePlacePreferences,
             postPlaceWarning,
-        }}>
+        } as RequestsProps}>
             {props.children}
         </requests.Provider>
     )

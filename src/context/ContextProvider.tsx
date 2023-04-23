@@ -1,10 +1,55 @@
 import React, { ReactElement, useCallback, useContext, useEffect, useState } from "react"
 import { scrollToElementInList } from "../lib/domHandling"
-import context, { ContextProps, DetailProps, ImgProps, PlaceProps, Position, PreferencesProps } from "./context"
+import context, { ContextProps } from "./context"
 import requests, { RequestsProps } from "./requests"
+
+export enum AuthMethods {
+   email = "email",
+}
 
 interface ContextProviderProps {
     children: ReactElement
+}
+
+export interface PreferencesProps {
+    liked?: boolean
+    notes?: string
+}
+
+export interface ImgProps {
+  id: number
+  path: string
+}
+
+export interface DetailProps {
+    id: number
+    gluten_free_food: boolean,
+    vegetal_milk: boolean,
+    vegan_food: boolean,
+    decaf: boolean
+}
+
+export interface PlaceProps {
+    id: number
+    name: string
+    latitude: number
+    longitude: number
+    address: string
+    distance?: number
+    type: number
+    quiet: number
+    wifi: number
+    outlet: number
+    seats: number
+    img: ImgProps[]
+    details: DetailProps
+    preferences: PreferencesProps
+}
+
+export interface Position {
+    latitude: number,
+    longitude: number,
+    fetched: boolean
 }
 
 
@@ -12,6 +57,8 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     const requestData: RequestsProps = useContext(requests)
 
     const [modal, setModal] = useState<number | null>(null)
+
+    const [authMethod, setAuthMethod] = useState<AuthMethods | undefined>(undefined)
 
     const [selected, setSelected] = useState<number | undefined>(undefined)
     
@@ -127,6 +174,8 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             toggleDisplay,
             userPosition,
             setUserPosition,
+            authMethod,
+            setAuthMethod,
             mapLoaded,
             setMapLoaded,
             searchString,

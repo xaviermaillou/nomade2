@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlaceElement from './PlaceElement';
-import context, { ContextProps, PlaceProps } from "../context/context"
+import context, { ContextProps } from "../context/context"
+import { PlaceProps } from '../context/ContextProvider';
 
 interface PlacesListProps {
     

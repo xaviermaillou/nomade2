@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { DetailProps, ImgProps, PreferencesProps } from "../context/context"
+import { DetailProps, ImgProps, PreferencesProps } from "../context/ContextProvider"
 import requests, { RequestsProps } from "../context/requests"
 import PlaceFeedback from "./PlaceFeedback"
 

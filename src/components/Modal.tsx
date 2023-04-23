@@ -26,14 +26,37 @@ const Modal = () => {
 
     const handleLogin = async (newUser: boolean) => {
         setLoading(true)
-        const result = newUser ?
-            await requestsData.signUpWithMailAndPassword(userMail, userPassword)
-            :
-            await requestsData.signInWithMailAndPassword(userMail, userPassword)
-        if (result.success) {
-            isSuccessAndCloseModal(2000)
+        if (newUser) {
+            const firebaseResponse = await requestsData.signUpWithMailAndPassword(userMail, userPassword)
+            console.log(firebaseResponse)
+            const newUser = firebaseResponse.user
+            if (firebaseResponse.success && newUser && newUser.email && newUser.uid) {
+                const apiResponse = await requestsData.postUser({
+                    email: newUser.email,
+                    uid: newUser.uid,
+                    type: contextData.authMethod
+                })
+                console.log(apiResponse)
+                if (apiResponse.userUid === newUser.uid) {
+                    isSuccessAndCloseModal(2000)
+                } else {
+                    setLoading(false)
+                    setErrorMessage(apiResponse.errorMessage)
+                }
+            } else {
+                setLoading(false)
+                setErrorMessage(firebaseResponse.errorMessage)
+            }
+        } else {
+            const response = await requestsData.signInWithMailAndPassword(userMail, userPassword)
+            if (response.success) {
+                isSuccessAndCloseModal(2000)
+            }
+            else {
+                setLoading(false)
+                setErrorMessage(response.errorMessage)
+            }
         }
-        else setErrorMessage(result.errorMessage)
     }
 
     const handleLogout = async () => {
@@ -49,6 +72,7 @@ const Modal = () => {
             if (response.placeId === placeId) {
                 isSuccessAndCloseModal(3000)
             } else {
+                setLoading(false)
                 setErrorMessage("Error while sending the alert, please try again")
             }
         }

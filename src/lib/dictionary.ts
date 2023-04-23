@@ -48,5 +48,6 @@ export enum placeTypeColor {
 export const AuthErrorMessages: {[key: string]: string} = {
     "auth/invalid-email": "Invalid email",
     "auth/user-not-found": "User not found",
-    "auth/weak-password" : "Password should be at least 6 characters"
+    "auth/weak-password" : "Password should be at least 6 characters",
+    "permission-denied": "Permission denied",
 }
