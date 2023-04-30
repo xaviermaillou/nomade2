@@ -36,7 +36,6 @@ const Modal = () => {
                     uid: newUser.uid,
                     type: contextData.authMethod
                 })
-                console.log(apiResponse)
                 if (apiResponse.userUid === newUser.uid) {
                     isSuccessAndCloseModal(2000)
                 } else {

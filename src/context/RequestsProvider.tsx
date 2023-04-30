@@ -8,7 +8,7 @@ import requests, { RequestsProps } from "./requests"
 import conf from '../conf.json'
 import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./ContextProvider"
 
-const API_URL = conf.API_URL
+const API_URL = process.env.NODE_ENV === 'development' ? conf.DEV_API_URL : conf.PROD_API_URL
 const IMG_URL = conf.IMG_URL
 
 enum Methods {
