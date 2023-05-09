@@ -1,8 +1,13 @@
 import React, { useContext, useEffect, useState } from "react"
 import ReactMapGL, { Marker } from "react-map-gl"
+import mapboxgl from "mapbox-gl";
 import context, { ContextProps } from "../context/context"
 import { placeTypeColor } from "../lib/dictionary"
 import { scrollToElementInList } from "../lib/domHandling"
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default
 
 const Map:React.FunctionComponent = () => {
     const contextData: ContextProps = useContext(context)
