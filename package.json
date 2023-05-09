@@ -20,8 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "deploy": "react-scripts build && sudo rm -r /var/www/html/coffeeto.work/* && sudo cp -r /home/ubuntu/nomade-project/nomade/build/. /var/www/html/coffeeto.work",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 react-scripts build",
+    "deploy": "sudo rm -r /var/www/html/coffeeto.work/* && sudo cp -r /home/ubuntu/nomade-project/nomade/build/. /var/www/html/coffeeto.work",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
