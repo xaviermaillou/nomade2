@@ -1,5 +1,5 @@
 {
     "DEV_API_URL": "http://localhost:9000",
     "PROD_API_URL": "https://coffeeto.work/api",
-    "IMG_URL": "http://51.77.230.232:9001"
+    "IMG_URL": "https://coffeeto.work/img"
 }
