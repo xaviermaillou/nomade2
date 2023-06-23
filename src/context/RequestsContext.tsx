@@ -1,12 +1,31 @@
+import React from "react";
+import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./DataContext"
 import axios, { AxiosResponse } from "axios"
 import { Auth, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, User, UserCredential } from "firebase/auth"
 import { doc, DocumentData, DocumentReference, Firestore, getFirestore, setDoc } from "firebase/firestore"
 import { ReactElement, useState } from "react"
 import app from "../firebase"
 import { AuthErrorMessages } from "../lib/dictionary"
-import requests, { RequestsProps } from "./requests"
 import conf from '../conf.json'
-import { DetailProps, ImgProps, PlaceProps, PreferencesProps } from "./ContextProvider"
+
+export interface RequestsProps {
+    signUpWithMailAndPassword: (email: string, password: string) => Promise<AuthResponseProps>,
+    signInWithMailAndPassword: (email: string, password: string) => Promise<AuthResponseProps>,
+    signOut: (arg: void) => void,
+    user: User | null,
+    userName?: string,
+    postUser: (body: { email: string, uid: string, type?: string }) => any,
+    fetchPlacesList: (latitude: number, longitude: number, distance: number, search: string) => Promise<PlaceProps[]>,
+    fetchPlaceImg: (id: number) => Promise<ImgProps[]>
+    fetchPlaceDetails: (id: number) => Promise<DetailProps>,
+    fetchPlacePreferences: (id: number) => Promise<PreferencesProps>,
+    postPlacePreferences: (id: number, body: { liked?: boolean, notes?: string }) => any,
+    patchPlacePreferences: (id: number, body: { liked?: boolean, notes?: string }) => any,
+    deletePlacePreferences: (id: number) => any,
+    postPlaceWarning: (id: number, body: { message?: string }) => any,
+}
+
+export const RequestsContext: React.Context<RequestsProps> = React.createContext({} as RequestsProps)
 
 const API_URL = process.env.NODE_ENV === 'development' ? conf.DEV_API_URL : conf.PROD_API_URL
 const IMG_URL = conf.IMG_URL
@@ -36,7 +55,7 @@ interface RequestsProviderProps {
     children: ReactElement
 }
 
-const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props) => {
+export const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props) => {
     const auth: Auth = getAuth(app)
     const db: Firestore = getFirestore(app)
     const [user, setUser] = useState<User | null>(null)
@@ -164,7 +183,7 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
     }
 
     return (
-        <requests.Provider value={{
+        <RequestsContext.Provider value={{
             signUpWithMailAndPassword,
             signInWithMailAndPassword,
             signOut,
@@ -181,8 +200,6 @@ const RequestsProvider: React.FunctionComponent<RequestsProviderProps> = (props)
             postPlaceWarning,
         } as RequestsProps}>
             {props.children}
-        </requests.Provider>
+        </RequestsContext.Provider>
     )
 }
-
-export default RequestsProvider

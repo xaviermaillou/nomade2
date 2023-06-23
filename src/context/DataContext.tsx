@@ -1,26 +1,53 @@
 import React, { ReactElement, useCallback, useContext, useEffect, useState } from "react"
 import { scrollToElementInList } from "../lib/domHandling"
-import context, { ContextProps } from "./context"
-import requests, { RequestsProps } from "./requests"
+import { RequestsContext, RequestsProps } from "./RequestsContext"
+
+export interface ContextProps {
+    placesList: PlaceProps[],
+    selected?: number,
+    setSelected: (arg?: number) => void,
+    displayBody?: boolean,
+    setDisplayBody: (arg: boolean) => void,
+    displayPlacesList?: boolean,
+    setDisplayPlacesList: (arg: boolean) => void,
+    toggleDisplay: (arg?: boolean, newId?: number, previousId?: number) => void,
+    userPosition: Position,
+    authMethod: AuthMethods,
+    setAuthMethod: (arg: AuthMethods) => void,
+    setUserPosition: (arg: Position) => void,
+    mapLoaded: boolean,
+    setMapLoaded: (arg: boolean) => void,
+    searchString: string,
+    setSearchString: (arg: string) => void,
+    desktopDisplay: boolean,
+    displayLogo: boolean,
+    setDisplayLogo: (arg: boolean) => void,
+    modal: number,
+    setModal: (arg: number | null) => void,
+    warningPlaceId?: number,
+    setWarningPlaceId: (arg?: number) => void
+}
+
+export const DataContext: React.Context<ContextProps> = React.createContext({} as ContextProps)
 
 export enum AuthMethods {
-   email = "email",
+    email = "email",
 }
 
 interface ContextProviderProps {
     children: ReactElement
 }
-
+ 
 export interface PreferencesProps {
     liked?: boolean
     notes?: string
 }
-
+ 
 export interface ImgProps {
-  id: number
-  path: string
+    id: number
+    path: string
 }
-
+ 
 export interface DetailProps {
     id: number
     gluten_free_food: boolean,
@@ -28,7 +55,7 @@ export interface DetailProps {
     vegan_food: boolean,
     decaf: boolean
 }
-
+ 
 export interface PlaceProps {
     id: number
     name: string
@@ -45,16 +72,16 @@ export interface PlaceProps {
     details: DetailProps
     preferences: PreferencesProps
 }
-
+ 
 export interface Position {
     latitude: number,
     longitude: number,
     fetched: boolean
 }
-
-
-const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) => {
-    const requestData: RequestsProps = useContext(requests)
+ 
+ 
+export const DataContextProvider: React.FunctionComponent<ContextProviderProps> = (props) => {
+    const requestData: RequestsProps = useContext(RequestsContext)
 
     const [modal, setModal] = useState<number | null>(null)
 
@@ -163,7 +190,7 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
     }, [selected, alreadyFetchedPlacesDetails, fetchPlaceDetailsAndSetState])
 
     return (
-        <context.Provider value={{
+        <DataContext.Provider value={{
             placesList,
             selected,
             setSelected,
@@ -189,8 +216,6 @@ const ContextProvider: React.FunctionComponent<ContextProviderProps> = (props) =
             setWarningPlaceId
         } as ContextProps}>
             {props.children}
-        </context.Provider>
+        </DataContext.Provider>
     )
 }
-
-export default ContextProvider

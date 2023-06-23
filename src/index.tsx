@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import ContextProvider from './context/ContextProvider';
-import RequestsProvider from './context/RequestsProvider';
+import { DataContextProvider } from './context/DataContext';
+import { RequestsProvider } from './context/RequestsContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <RequestsProvider>
-      <ContextProvider>
+      <DataContextProvider>
         <App />
-      </ContextProvider>
+      </DataContextProvider>
     </RequestsProvider>
   </React.StrictMode>
 );

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Search from "./Search";
-import context, { ContextProps } from "../context/context"
+import { ContextProps, DataContext } from "../context/DataContext"
 import User from "./User";
 
 interface HeaderProps {
@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 const Header: React.FunctionComponent<HeaderProps> = (props) => {
-    const contextData: ContextProps = useContext(context)
+    const contextData: ContextProps = useContext(DataContext)
 
     return (
         <div id="header" className="horizontal">

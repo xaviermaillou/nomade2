@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
-import context, { ContextProps } from "../context/context"
+import { ContextProps, DataContext } from "../context/DataContext"
 
 const Search:React.FunctionComponent = () => {
-    const contextData: ContextProps = useContext(context)
+    const contextData: ContextProps = useContext(DataContext)
 
     const [selected, setSelected] = useState<boolean>(false)
     const [searchCopy, setSearchCopy] = useState(contextData.searchString)

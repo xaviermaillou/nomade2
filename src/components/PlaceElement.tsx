@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { outletsScore, placeTypeColor, placeTypeName, quietScore, seatsScore, wifiScore } from '../lib/dictionary';
-import { PlaceProps } from '../context/ContextProvider';
-import context, { ContextProps } from "../context/context"
+import { PlaceProps } from '../context/DataContext';
+import { ContextProps, DataContext } from "../context/DataContext"
 import PlaceCarrousel from './PlaceCarrousel';
 
 interface PlaceElementProps {
@@ -11,7 +11,7 @@ interface PlaceElementProps {
 }
 
 const PlaceElement: React.FunctionComponent<PlaceElementProps> = (props) => {
-    const contextData: ContextProps = useContext(context)
+    const contextData: ContextProps = useContext(DataContext)
     
     const handleClick = async () => {
         if (!contextData.displayBody && props.isCopy) contextData.toggleDisplay(true, props.data.id)

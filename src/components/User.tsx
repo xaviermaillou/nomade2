@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react"
-import context, { ContextProps } from "../context/context"
-import { AuthMethods } from "../context/ContextProvider"
-import requests, { RequestsProps } from "../context/requests"
+import { ContextProps, DataContext } from "../context/DataContext"
+import { AuthMethods } from "../context/DataContext"
+import { RequestsContext, RequestsProps } from "../context/RequestsContext"
 
 const User: React.FunctionComponent = () => {
-    const contextData: ContextProps = useContext(context)
-    const requestsData: RequestsProps = useContext(requests)
+    const contextData: ContextProps = useContext(DataContext)
+    const requestsData: RequestsProps = useContext(RequestsContext)
 
     const [selected, setSelected] = useState<boolean>(false)
 

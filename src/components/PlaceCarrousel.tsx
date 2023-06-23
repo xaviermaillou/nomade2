@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import { DetailProps, ImgProps, PreferencesProps } from "../context/ContextProvider"
-import requests, { RequestsProps } from "../context/requests"
+import { DetailProps, ImgProps, PreferencesProps } from "../context/DataContext"
+import { RequestsContext, RequestsProps } from "../context/RequestsContext"
 import PlaceFeedback from "./PlaceFeedback"
 
 interface PlaceCarrouselProps {
@@ -11,7 +11,7 @@ interface PlaceCarrouselProps {
 }
 
 const PlaceCarrousel = (props: PlaceCarrouselProps) => {
-    const requestsData: RequestsProps = useContext(requests)
+    const requestsData: RequestsProps = useContext(RequestsContext)
 
     return (
         <div className="carrousel horizontal fullWidth">

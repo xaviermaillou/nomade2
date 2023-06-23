@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import ReactMapGL, { Marker } from "react-map-gl"
 import mapboxgl from "mapbox-gl";
-import context, { ContextProps } from "../context/context"
+import { ContextProps, DataContext } from "../context/DataContext"
 import { placeTypeColor } from "../lib/dictionary"
 import { scrollToElementInList } from "../lib/domHandling"
 
@@ -10,7 +10,7 @@ import { scrollToElementInList } from "../lib/domHandling"
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default
 
 const Map:React.FunctionComponent = () => {
-    const contextData: ContextProps = useContext(context)
+    const contextData: ContextProps = useContext(DataContext)
 
     const [displayMap, setDisplayMap] = useState<boolean>(true)
     const [viewport, setViewport] = useState({

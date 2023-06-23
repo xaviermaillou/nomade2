@@ -1,9 +1,9 @@
 import { useContext, useState } from "react"
-import context, { ContextProps } from "../context/context"
+import { ContextProps, DataContext } from "../context/DataContext"
 import PlacesList from "./PlacesList"
 
 const Body = () => {
-    const contextData: ContextProps = useContext(context)
+    const contextData: ContextProps = useContext(DataContext)
 
     return (
         <div id='body' className={contextData.displayBody ? 'open' : ''}>

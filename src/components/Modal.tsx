@@ -1,10 +1,10 @@
 import { useContext, useState } from "react"
-import context, { ContextProps } from "../context/context"
-import requests, { RequestsProps } from "../context/requests"
+import { ContextProps, DataContext } from "../context/DataContext"
+import { RequestsContext, RequestsProps } from "../context/RequestsContext"
 
 const Modal = () => {
-    const contextData: ContextProps = useContext(context)
-    const requestsData: RequestsProps = useContext(requests)
+    const contextData: ContextProps = useContext(DataContext)
+    const requestsData: RequestsProps = useContext(RequestsContext)
 
     const [loading, setLoading] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)

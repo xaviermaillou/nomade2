@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlaceElement from './PlaceElement';
-import context, { ContextProps } from "../context/context"
-import { PlaceProps } from '../context/ContextProvider';
+import { ContextProps, DataContext } from "../context/DataContext"
+import { PlaceProps } from '../context/DataContext';
 
 interface PlacesListProps {
     
 }
 
 const PlacesList: React.FunctionComponent<PlacesListProps> = (props) => {
-    const contextData: ContextProps = useContext(context)
+    const contextData: ContextProps = useContext(DataContext)
 
     const [logoHidingHandled, setLogoHidingHandled] = useState<boolean>(false)
 

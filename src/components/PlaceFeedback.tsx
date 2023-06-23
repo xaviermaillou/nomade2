@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
-import context, { ContextProps } from "../context/context"
-import { PreferencesProps } from "../context/ContextProvider"
-import requests, { RequestsProps } from "../context/requests"
+import { ContextProps, DataContext } from "../context/DataContext"
+import { PreferencesProps } from "../context/DataContext"
+import { RequestsContext, RequestsProps } from "../context/RequestsContext"
 
 interface PlaceFeedbackProps {
     placeId: number
@@ -9,8 +9,8 @@ interface PlaceFeedbackProps {
 }
 
 const PlaceFeedback = (props: PlaceFeedbackProps) => {
-    const requestData: RequestsProps = useContext(requests)
-    const contextData: ContextProps = useContext(context)
+    const requestData: RequestsProps = useContext(RequestsContext)
+    const contextData: ContextProps = useContext(DataContext)
 
     const [open, setOpen] = useState<boolean>(false)
     const [dataAlreadyExists, setDataAlreadyExists] = useState<boolean>(false)
